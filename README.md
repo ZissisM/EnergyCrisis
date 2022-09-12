@@ -18,8 +18,8 @@
  * fig7_load.do: Generates Figure S5 (load as a denominator for shares calculation).
  * fig7_hourg.do: Generates EDF4 (Solar,Wind, Nuclear shares by hour-group vulnerability).
  * fig7GasCoalHydro.do: Generates EDF5 (Gas,Coal, Hydro shares by hour-group vulnerability).
- * Fig7_noOct: Generates Figure S4 (excluding month of October for shares and vulnerability)
- * HourlyFiguresSI: Generates 8-paneled country hourly profile figures (Figures S7-S38).
- * SITables: Generates data for the tables shown in Extended Data (EDF1, EDF2, EDF3) and SI section (S1 & S2).
- * redoShares: Used to re-calculate generation shares used for Figure 7 by making modifications to the denominator.
- * EU_TSO_clean: Used initially to clean hourly generation data and reformat it appropriately.
+ * Fig7_noOct.do: Generates Figure S4 (excluding month of October for shares and vulnerability)
+ * HourlyFiguresSI.do: Generates 8-paneled country hourly profile figures (Figures S7-S38).
+ * SITables.do: Generates data for the tables shown in Extended Data (EDF1, EDF2, EDF3) and SI section (S1 & S2).
+ * redoShares.do: Used to re-calculate generation shares used for Figure 7 by making modifications to the denominator.
+ * EU_TSO_clean.do: Used initially to clean hourly generation data and reformat it appropriately.
