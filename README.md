@@ -1,5 +1,5 @@
-# Electricity Prices, Generation Mix, European Energy Crisis]{Electricity price vulnerability and the consequences of the generation mix in the European Energy Crisis 
-#### Bajo, Bento, Kaffine, Marmarelis
+# Electricity Prices, Generation Mix, European Energy Crisis Electricity price vulnerability and the consequences of the generation mix in the European Energy Crisis 
+### Bajo, Bento, Kaffine, Marmarelis
 
 ## Datasets 
 
