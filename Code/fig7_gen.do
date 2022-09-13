@@ -77,6 +77,8 @@ replace z3=3 if Country=="AT"
 replace z3=1 if Country=="DK"
 replace z3=2 if Country=="NL"
 replace z3=7 if Country=="CZ"
+replace z3=9 if Country=="EE"
+
 replace z3=12 if Country=="SI"
 
 
@@ -166,7 +168,7 @@ twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) m
 
 
 ***Combine 6 panels into one figure
-graph combine gall nall sall wall call hall ,  name(alldays,replace) col(3) altshrink 
+graph combine gall nall sall wall call hall,  name(alldays,replace) col(3) altshrink 
 graph export Fig7_Gen.jpg,replace
 
 
