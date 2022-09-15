@@ -168,13 +168,21 @@ twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) m
 
 
 ***Combine 6 panels into one figure
+//graph combine gall nall sall fig8 wall call hall,  name(alldays,replace) row(2) altshrink 
 graph combine gall nall sall wall call hall,  name(alldays,replace) col(3) altshrink 
+
 graph export Fig7_Gen.jpg,replace
 
 
 ****Multivariate regression****
 replace Solar = 0.038 in 7 //Denmark educated guess for solar so it does not omit entire country for missing this value in the regression
-reg Intensity Solar Wind Nuc Coal Gas HydroDispatch 
+replace Solar = Solar*100
+replace Wind = Wind*100
+replace Nuc = Nuc*100
+replace Gas = Gas*100
+replace Coal = Coal*100
+replace HydroDispatch = HydroDispatch*100
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
 label var RE "IRE"
 label var Nuc "Nuclear"
 
