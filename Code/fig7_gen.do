@@ -161,7 +161,7 @@ replace z6=3 if Country=="CZ"
 
 robreg mm Intensity Gas if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("A",position(11) size(*1.3)) xtitle("Gas share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(gall,replace) || function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("A",position(11) size(*1.3)) xtitle("Natural Gas share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(gall,replace) || function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
 
 
 
