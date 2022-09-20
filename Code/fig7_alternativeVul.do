@@ -1,7 +1,7 @@
 **Fig 7 generation with energy shares with denominator as TOTAL gen (no imports included)
 clear
 
-use allcountries_genshares
+use allcountries_nonsig
 
 
 **to adjust for DK and NL
@@ -23,6 +23,10 @@ replace z1=3 if Country=="PT"
 replace z1=3 if Country=="NL"
 replace z1=3 if Country=="SI"
 replace z1=3 if Country=="DE"
+replace z1=11 if Country=="LT"
+replace z1=3 if Country=="BG"
+
+
 
 
 
@@ -38,24 +42,25 @@ twoway scatter Intensity Nuc if exclude==0, mlabel(labels) mlabvposition(z1) mla
 
 ***Wind
 cap gen z2=1
-replace z2=3 if Country=="FI"
+replace z2=5 if Country=="FI"
 replace z2=9 if Country=="DK"
 replace z2=3 if Country=="PT"
 replace z2=4 if Country=="NL"
 replace z2=3 if Country=="LT"
-replace z2=3 if Country=="RS"
-replace z2=2 if Country=="BG"
+replace z2=4 if Country=="RS"
+replace z2=3 if Country=="BG"
 replace z2=3 if Country=="BE"
 replace z2=3 if Country=="NO"
 replace z2=10 if Country=="SI"
 replace z2=4 if Country=="RO"
 replace z2=12 if Country=="PL"
-replace z2=3 if Country=="EE"
-replace z2=3 if Country=="HU"
+replace z2=2 if Country=="EE"
+replace z2=1 if Country=="HU"
 replace z2=3 if Country=="CZ"
 replace z2=5 if Country=="CH"
+replace z2=1 if Country=="AT"
+replace z2=3 if Country=="DE"
 
-replace z2=3 if Country=="AT"
 
 
 robreg mm Intensity Wind if exclude==0
@@ -68,9 +73,9 @@ twoway scatter Intensity Wind if  exclude==0, mlabel(labels) mlabvposition(z2) m
 
 ***Solar
 cap gen z3=1
-replace z3=9 if Country=="BG"
+replace z3=4 if Country=="BG"
 replace z3=12 if Country=="HR"
-replace z3=3 if Country=="CH"
+replace z3=2 if Country=="CH"
 replace z3=4 if Country=="HU"
 replace z3=3 if Country=="RO"
 replace z3=1 if Country=="RS"
@@ -95,9 +100,9 @@ twoway scatter Intensity Solar if   exclude==0, mlabel(labels) mlabvposition(z3)
 cap gen z4=1
 replace z4=3 if Country=="PT"
 replace z4=3 if Country=="FI"
-replace z4=5 if Country=="HU"
-replace z4=10 if Country=="NO"
-replace z4=3 if Country=="CH"
+replace z4=1 if Country=="HU"
+replace z4=9 if Country=="NO"
+replace z4=4 if Country=="CH"
 replace z4=1 if Country=="AT"
 replace z4=2 if Country=="RO"
 replace z4=12 if Country=="SI"
@@ -105,7 +110,7 @@ replace z4=3 if Country=="NL"
 replace z4=12 if Country=="ES"
 replace z4=4 if Country=="DE"
 replace z4=6 if Country=="EE"
-replace z4=3 if Country=="CZ"
+replace z4=1 if Country=="CZ"
 
 robreg mm Intensity Coal if exclude==0
 matrix b=e(b)
@@ -118,22 +123,24 @@ twoway scatter Intensity Coal if exclude==0, mlabel(labels) mlabvposition(z4) ml
 ***Hydro
 cap gen z5=1
 replace z5=3 if Country=="PT"
-replace z5=9 if Country=="FI"
-replace z5=4 if Country=="EE"
-replace z5=3 if Country=="RS"
-replace z5=12 if Country=="SI"
+replace z5=12 if Country=="FI"
+replace z5=3 if Country=="EE"
+replace z5=4 if Country=="RS"
+replace z5=5 if Country=="SI"
 replace z5=2 if Country=="DE"
 replace z5=9 if Country=="NO"
 replace z5=3 if Country=="PL"
 replace z5=2 if Country=="AT"
-replace z5=8 if Country=="BE"
+replace z5=1 if Country=="BE"
 replace z5=12 if Country=="IT"
 replace z5=3 if Country=="NL"
 replace z5=3 if Country=="LT"
-replace z5=3 if Country=="PL"
+replace z5=5 if Country=="PL"
 replace z5=2 if Country=="FR"
 replace z5=2 if Country=="RO"
 replace z5=11 if Country=="CZ"
+replace z5=3 if Country=="SK"
+
 
 
 robreg mm Intensity HydroDispatch  if exclude==0
@@ -151,15 +158,17 @@ replace z6=4 if Country=="PT"
 replace z6=3 if Country=="BG"
 replace z6=4 if Country=="CH"
 replace z6=12 if Country=="SI"
-replace z6=12 if Country=="DE"
-replace z6=3 if Country=="BE"
+replace z6=3 if Country=="DE"
+replace z6=12 if Country=="BE"
 replace z6=9 if Country=="NO"
-replace z6=11 if Country=="EE"
+replace z6=2 if Country=="EE"
 replace z6=3 if Country=="AT"
 replace z6=4 if Country=="PL"
 replace z6=6 if Country=="FI"
-replace z6=3 if Country=="CZ"
+replace z6=1 if Country=="CZ"
 replace z6=3 if Country=="RS"
+replace z6=3 if Country=="SK"
+
 
 
 
@@ -176,14 +185,13 @@ twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) m
 graph combine gall nall sall wall call hall,  name(alldays,replace) col(3) altshrink 
 
 **Contains multivariate regression result for Panel A
-use Fig8,clear
+use Fig8_nonsig,clear
 
 grstyle clear
 grstyle init
 grstyle set plain
 
-
-**Sorting for Panel A
+**sorting for panel A
 // sort coef
 // gen n= _n
 // labmask n, values(source)
@@ -194,7 +202,7 @@ graph twoway (rcap  ul ll n if source=="Natural Gas", lwidth(*1) msize(*1.1) hor
 
 //horizontal
 graph combine fig8 alldays, rows(2) imargin(b=0.05 t=0.05)
-graph export Fig7_combined.jpg,replace
+graph export Fig7_combined_alternative.jpg,replace
 
 
 ****Multivariate regression****
@@ -205,6 +213,6 @@ label var Nuc "Nuclear"
 
 test Solar Wind Nuc Coal Gas HydroDispatch 
 *Output table but it is heavily edited later manually
-outreg2 using TableSImultivariateShares.doc, replace se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+outreg2 using TableSImultivariateShares_nonSig.doc, replace se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
 replace Solar = . in 7
 
