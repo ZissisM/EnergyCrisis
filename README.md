@@ -1,5 +1,5 @@
 # Electricity Prices, Generation Mix, European Energy Crisis Electricity price vulnerability and the consequences of the generation mix in the European Energy Crisis 
-### Bajo, Bento, Kaffine, Marmarelis
+### Raúl Bajo, Antonio Bento, Daniel Kaffine, and Zissis Marmarelis
 
 ## Datasets 
 
@@ -20,13 +20,13 @@
  
  * Fig6.do: Generates Figure 6
  
- * fig7_gen.do: Generates Figure 7 (and S6 making the minor modification specified in code). Also generates Table EDF4 (multivariate regression of shares on vulnerability).
+ * fig7_gen.do: Generates Figure 7 (and Figure S6 making the minor modification specified in code). Also generates Table EDF4 (multivariate regression of shares on vulnerability).
  
  * fig7_load.do: Generates Figure S5 (load as a denominator for shares calculation).
  
  * fig7_hourg.do: Generates EDF4 (Solar,Wind, Nuclear shares by hour-group vulnerability).
  
-  * fig7_alternativeVul.do: Generates Figure S9 (Figure 7 but with alternative vulnerability measure).
+ * fig7_alternativeVul.do: Generates Figure S9 (Figure 7 but with alternative vulnerability measure).
  
  * fig7GasCoalHydro.do: Generates EDF5 (Gas,Coal, Hydro shares by hour-group vulnerability).
  
@@ -34,8 +34,14 @@
  
  * HourlyFiguresSI.do: Generates 8-paneled country hourly profile figures (Figures S7-S38).
  
- * SITables.do: Generates data for the tables shown in Extended Data (EDF1, EDF2, EDF3) and SI section (S1 & S2).
+ * SITables.do: Generates data for the tables shown in Extended Data (EDF1, EDF2, EDF3) and SI section (S1 & S2). These are heavily edited later to format appropriately and make final tables.
  
  * redoShares.do: Used to re-calculate generation shares used for Figure 7 by making modifications to the denominator.
  
  * EU_TSO_clean.do: Used initially to clean hourly generation data and reformat it appropriately.
+ 
+ 
+ 
+ *Entsoe Pandas Client was used to download the data. This can be found here: https://github.com/EnergieID/entsoe-py
+ 
+ * Datawrapper.de was used for the construction of maps for the Figures with our estimated data from the above code. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 5).
