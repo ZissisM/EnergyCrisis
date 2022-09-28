@@ -16,7 +16,7 @@
 
 ## Code
 
-**Main Text Figures
+**Main Text Figures**
 
  * Fig1.do: Generates Figure 1
  
@@ -28,7 +28,7 @@
  
  * fig7_gen.do: Generates Figure 7 (and Figure S6 making the minor modification specified in code). Also generates Table EDF4 (multivariate regression of shares on vulnerability).
  
- **Extended Data and SI Figures
+ **Extended Data and SI Figures**
  
  * fig7_load.do: Generates Figure S5 (load as a denominator for shares calculation).
  
@@ -44,7 +44,8 @@
  
  * SITables.do: Generates data for the tables shown in Extended Data (Tables EDF1, EDF2, EDF3) and SI section (S1 & S2). These are heavily edited later to format appropriately and make final tables.
  
- **Cleaning Code
+ **Cleaning Code**
+ 
  * redoShares.do: Used to re-calculate generation shares used for Figure 7 by making modifications to the denominator.
  
  * EU_TSO_clean.do: Used initially to clean the downloaded hourly generation data and reformat it appropriately.
