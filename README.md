@@ -5,11 +5,11 @@
 
 ## Datasets 
 
- * 'Contry datasets' include the data used for each country, analyzed individually, for our sample period (April 1 2021-October 31 2021). These include the hourly wholesale electricity price, hourly load, and hourly energy generation by source, as described in Supplementary Discussion 2. Also included are the individual TSOs of Germany and Norway. These are named according to their two letter official country abbreviation, and the ending of '_new'.
+ * *Contry datasets* include the data used for each country, analyzed individually, for our sample period (April 1 2021-October 31 2021). These include the hourly wholesale electricity price, hourly load, and hourly energy generation by source, as described in Supplementary Discussion 2. Also included are the individual TSOs of Germany and Norway. These are named according to their two letter official country abbreviation, and the ending of '_new'.
 
- * 'Combined datasets' include streamlined data of all countries aggregated. Namely, average generation shares and vulnerability estimates (labeled Intensity) are shown in allcountries_ datasets. Vulnerability estimates (e.g., used for Figure 4 and similar SI Figures) are reflected in HourlyEst_ datasets, and each specification condition (such as excluding a certain month or predicting future vulnerability). Allcountries_ datasets include the HourlyEst_ estimates in addition to corresponding generation shares.
+ * *Combined datasets* include streamlined data of all countries aggregated. Namely, average generation shares and vulnerability estimates (labeled Intensity) are shown in allcountries_ datasets. Vulnerability estimates (e.g., used for Figure 4 and similar SI Figures) are reflected in HourlyEst_ datasets, and each specification condition (such as excluding a certain month or predicting future vulnerability). Allcountries_ datasets include the HourlyEst_ estimates in addition to corresponding generation shares.
  
- * 'Other datasets' include datasets used to generate certain Figures, such as Figure 1 utilizing wholesale prices (sample period and historic), aswell as estimates for Figure 5 generation. Raw data is also included here: hourly wholesale prices, daily gas prices (newprices), while hourly raw energy generation and load data are too large and thus the link to these zip files is provided [here](https://drive.google.com/drive/folders/1iyNvfgKGQ_N0W-IvbxpxyQ3Im6CjiiJI?usp=sharing).
+ * *Other datasets* include datasets used to generate certain Figures, such as Figure 1 utilizing wholesale prices (sample period and historic), aswell as estimates for Figure 5 generation. Raw data is also included here: hourly wholesale prices, daily gas prices (newprices), while hourly raw energy generation and load data are too large and thus the link to these zip files is provided [here](https://drive.google.com/drive/folders/1iyNvfgKGQ_N0W-IvbxpxyQ3Im6CjiiJI?usp=sharing).
 
 
 ## Code
