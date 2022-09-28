@@ -190,7 +190,7 @@ grstyle set plain
 // labmask n, values(source)
 
 
-**Horizontal
+**Horizontal Panel A with confidence intervals
 graph twoway (rcap  ul ll n if source=="Natural Gas", lwidth(*1) msize(*1.1) horizontal lcolor(maroon*0.92) name(fig8,replace)) || (rcap  ul ll n if source!="Natural Gas", lwidth(*1) msize(*1.1) horizontal lcolor(emidblue*0.65)) || (dot coef n if source!="Natural Gas", horizontal mcolor(emidblue%65) msymbol(d)  msize(*1.1) ytitle("") barw(1.3) legend(off)) || (dot coef n if source=="Natural Gas", horizontal xtitle(" Vulnerability (EUR/MWh)", size(*0.77)) mcolor(maroon%87) msymbol(d)  msize(*1.1) ytitle("") title("A",position(11) size(*0.59)) barw(1.3) legend(off) ylabel(,valuelabel labsize(*0.72) angle(horizontal)) xlabel(,labsize(*0.72)) xline(0, lwidth(*1))  fysize(30)) 
 
 //horizontal
@@ -198,7 +198,7 @@ graph combine fig8 alldays, rows(2) imargin(b=0.05 t=0.05)
 graph export Fig7_combined.jpg,replace
 
 
-****Multivariate regression****
+****Multivariate regression Table EDF4****
 replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
 reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
 label var RE "IRE"
