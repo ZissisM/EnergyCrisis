@@ -1,4 +1,4 @@
-# European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis 
+# "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis" replication package
 ### Raúl Bajo, Antonio Bento, Daniel Kaffine, and Zissis Marmarelis
 
 #### The following describes the datasets and code used to generate each figure and result in the paper. 
