@@ -177,6 +177,7 @@ graph combine gall nall sall wall call hall,  name(alldays,replace) col(3) altsh
 
 **Contains multivariate regression result for Panel A
 use Fig8,clear
+*Fig 8 has results from multivariate regression table below
 
 grstyle clear
 grstyle init
