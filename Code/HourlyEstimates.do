@@ -1,6 +1,6 @@
 *Obtain Hourly Estimates of Vulnerability 
-*Used to generate Figure 4 (in datasets labeled "Intensity") and SI Figures of Vulnerability Maps
-*Used to create map for Figure 5B
+*Used to generate Figure 4 (in datasets labeled "Intensity") and SI/EDF Figures of Vulnerability Maps
+*Used to create map for Figure and 5B
 clear
 set scheme white_tableau
 
@@ -10,7 +10,7 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "H
 
 	use `y'_new
 	//if we want to include a time trend instead of monthly fixed effects, trend=1 (only for the case of Greece!)
-	//Edit the function here to exclude certain months, or omit controls
+	*******Edit the function HERE (and below for Greece) to exclude certain months, or omit controls *******
 	if trend==0{
 		reg wholesale_test gas_p RE_gen c.load##c.load c.gas_p#i.hour i.month#i.hour i.dow#i.hour, cluster(dt)
 	}
@@ -19,7 +19,7 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "H
 		reg wholesale_test gas_p  RE_gen c.load##c.load c.gas_p#i.hour i.dow#i.hour c.t, cluster(dt)
 	}
 
-	**No controls
+	**For example, No controls
 	//reg wholesale_test gas_p c.gas_p#i.hour i.month#i.hour i.dow#i.hour, cluster(dt)
 	**No october
 	//reg wholesale_test gas_p RE_gen c.load##c.load c.gas_p#i.hour i.month#i.hour i.dow#i.hour if month<10, cluster(dt)
@@ -91,6 +91,8 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "
 
 
 	** Predicted Electricity Price: Vulnerability
+	
+	**Uncomment whichever ΔP is appropriate: Our main specification is the first one, from April 2021 to October 2021
 
 	//April to October gas price difference = 68.3
  	cap gen elec_`y'= (68.3 * Intensity_PT_`y')/24
@@ -172,7 +174,8 @@ replace Hourts_PT = 0 if Hourts_PT==.
 
 save elec_ps,replace
 
-*Merge into dataset that has generation shares 
+*Merge into dataset that has generation shares for other figures
+
 use allcountries_genshares
 drop Intensity_1 Intensity Intensity_2 Intensity_3 Hours_PT
 merge m:1 Country using elec_ps
