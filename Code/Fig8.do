@@ -1,3 +1,5 @@
+***Not used-- merged into fig7_gen
+
 use Fig8,clear
 
 grstyle clear
