@@ -1,5 +1,6 @@
 ***Robsutness Check Table Data
-*Tables edited manually given generated estimates/data from below
+
+***Tables edited manually given generated estimates/data from below***
 
 
 
@@ -37,7 +38,7 @@ foreach x in "AT" "FR" "IT" "PL" "PT" {
 foreach x in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
 	//foreach x in "AT" {
 	use `x'_new,clear
-	replace load = load/1000
+	replace load = load/1000 if load>100
 	*No Controls
 	reg wholesale_test gas_p i.month#i.hour i.dow#i.hour, cl(dt) 
 	outreg2 using `x'SIT.doc,append se label keep(gas_p) bdec(3) nocons ctitle("(1)")
@@ -165,7 +166,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "
 
 
 
-**Table for all countries with preferred specification and showing all coefficients-- EDF Table 3 
+***Table for all countries with preferred specification and showing all coefficients: EDF Table 3 
 *Pass-Through and Covariate Coefficient Results for all Countries, combined load effect, observations, and R-squared
 *Import into one excel file, manually edited and added combined load effect
 
@@ -183,7 +184,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "HR" "HU" "I
 
 
 
-***Data for Table EDF 2 for Pass-Through  Results for all Countries across Hours (reflected in Figure panels A,C,D,E,F)
+***Data for Table EDF 2 for Pass-Through  Results for all Countries across Hours and Entire Day (reflected in Figure 5 panels A,C,D,E,F)
 
 putexcel set Table3, replace
 
