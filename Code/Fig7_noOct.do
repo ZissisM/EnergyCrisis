@@ -17,6 +17,7 @@ use allcountries_noOct
 
 
 ***Nuclear
+*Change label orientations to avoid overlap
 cap gen z1=1
 replace z1=3 if Country=="RO"
 replace z1=6 if Country=="FI"
@@ -32,7 +33,7 @@ replace z1=11 if Country=="DK"
 replace z1=5 if Country=="EE"
 replace z1=12 if Country=="HU"
 
-
+*Robust mm regression, and lfit
 robreg mm Intensity Nuc if exclude==0
 matrix b=e(b)
 twoway scatter Intensity Nuc if exclude==0, mlabel(labels) mlabvposition(z1) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("B",position(11) size(*1.3)) xtitle("Nuclear share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(nall,replace) ||function y=_b[Nuc]*x+_b[_cons],range(Nuc) || lfit Intensity Nuc if exclude==0, lcolor(ebblue*0.5)
