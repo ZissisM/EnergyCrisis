@@ -5,12 +5,12 @@ use allcountries_genshares
 
 
 **to adjust for DK and NL
-//replace Solar = 0.038 in 7
-//replace Solar = 0.0947 in 17
+replace Solar = 0.038 in 7
+replace Solar = 0.0947 in 17
 
-**back to how data is downloaded
-// replace Solar = 0.0230995 in 17
-// replace Solar = . in 7
+*back to how data is downloaded
+replace Solar = 0.0230995 in 17
+replace Solar = . in 7
 
 **For orienting the labels on graphs to avoid overlap
 cap gen z1=1
@@ -31,7 +31,7 @@ replace z1=3 if Country=="DE"
 robreg mm Intensity Nuc if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each country
-twoway scatter Intensity Nuc if exclude==0, mlabel(labels) mlabvposition(z1) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("C",position(11) size(*1.75)) xtitle("Nuclear share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(nall,replace) ||function y=_b[Nuc]*x+_b[_cons],range(Nuc) || lfit Intensity Nuc if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Nuc if exclude==0, mlabel(labels) mlabvposition(z1) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("C)",position(11) size(*1.75)) xtitle("Nuclear share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(nall,replace) ||function y=_b[Nuc]*x+_b[_cons],range(Nuc) || lfit Intensity Nuc if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -60,7 +60,7 @@ replace z2=3 if Country=="AT"
 
 robreg mm Intensity Wind if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Wind if  exclude==0, mlabel(labels) mlabvposition(z2) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("E",position(11) size(*1.75)) xtitle("Wind share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) legend(off) name(wall,replace) || function y=_b[Wind]*x+_b[_cons],range(Wind) || lfit Intensity Wind if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Wind if  exclude==0, mlabel(labels) mlabvposition(z2) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("E)",position(11) size(*1.75)) xtitle("Wind share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) legend(off) name(wall,replace) || function y=_b[Wind]*x+_b[_cons],range(Wind) || lfit Intensity Wind if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -86,7 +86,7 @@ replace z3=12 if Country=="SI"
 
 robreg mm Intensity Solar if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Solar if   exclude==0, mlabel(labels) mlabvposition(z3) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("D",position(11) size(*1.75)) xtitle("Solar share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(sall,replace) || function y=_b[Solar]*x+_b[_cons],range(Solar) || lfit Intensity Solar if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Solar if   exclude==0, mlabel(labels) mlabvposition(z3) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("D)",position(11) size(*1.75)) xtitle("Solar share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(sall,replace) || function y=_b[Solar]*x+_b[_cons],range(Solar) || lfit Intensity Solar if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -109,7 +109,7 @@ replace z4=3 if Country=="CZ"
 
 robreg mm Intensity Coal if exclude==0
 matrix b=e(b)
-twoway scatter Intensity Coal if exclude==0, mlabel(labels) mlabvposition(z4) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("F",position(11) size(*1.75)) xtitle("Coal share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(call,replace) ||function y=_b[Coal]*x+_b[_cons],range(Coal) || lfit Intensity Coal if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Coal if exclude==0, mlabel(labels) mlabvposition(z4) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("F)",position(11) size(*1.75)) xtitle("Coal share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(call,replace) ||function y=_b[Coal]*x+_b[_cons],range(Coal) || lfit Intensity Coal if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -138,7 +138,7 @@ replace z5=11 if Country=="CZ"
 
 robreg mm Intensity HydroDispatch  if exclude==0
 matrix b = e(b)
-twoway scatter Intensity HydroDispatch if  exclude==0, mlabel(labels) mlabvposition(z5) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("G",position(11) size(*1.75)) xtitle("Hydro (dispatch) share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) legend(off) name(hall,replace) || function y=_b[HydroDispatch]*x+_b[_cons],range(HydroDispatch) || lfit Intensity HydroDispatch if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity HydroDispatch if  exclude==0, mlabel(labels) mlabvposition(z5) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("G)",position(11) size(*1.75)) xtitle("Hydro (dispatch) share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) legend(off) name(hall,replace) || function y=_b[HydroDispatch]*x+_b[_cons],range(HydroDispatch) || lfit Intensity HydroDispatch if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -165,9 +165,11 @@ replace z6=3 if Country=="RS"
 
 robreg mm Intensity Gas if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("B",position(11) size(*1.75)) xtitle("Natural Gas share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(gall,replace) || function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) mlabsize(*2.03) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("B)",position(11) size(*1.75)) xtitle("Natural Gas share",size(*2.2)) ylabel(,labsize(*2) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*2)) ytitle(Vulnerability (EUR/MWh),size(*2.2)) name(gall,replace) || function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
 
 
+// graph combine gall nall sall wall call hall,  name(alldays,replace) col(3) altshrink 
+// graph export Fig7_adjustDKNL.jpg,replace
 
 
 
@@ -190,7 +192,7 @@ grstyle set plain
 
 
 **Horizontal
-graph twoway (rcap  ul ll n if source=="Natural Gas", lwidth(*1) msize(*1.1) horizontal lcolor(maroon*0.92) name(fig8,replace)) || (rcap  ul ll n if source!="Natural Gas", lwidth(*1) msize(*1.1) horizontal lcolor(emidblue*0.65)) || (dot coef n if source!="Natural Gas", horizontal mcolor(emidblue%65) msymbol(d)  msize(*1.1) ytitle("") barw(1.3) legend(off)) || (dot coef n if source=="Natural Gas", horizontal xtitle(" Vulnerability (EUR/MWh)", size(*0.77)) mcolor(maroon%87) msymbol(d)  msize(*1.1) ytitle("") title("A",position(11) size(*0.59)) barw(1.3) legend(off) ylabel(,valuelabel labsize(*0.72) angle(horizontal)) xlabel(,labsize(*0.72)) xline(0, lwidth(*1))  fysize(30)) 
+graph twoway (rcap  ul ll n if source=="Natural Gas", lwidth(*1) msize(*1.1) horizontal lcolor(maroon*0.92) name(fig8,replace)) || (rcap  ul ll n if source!="Natural Gas", lwidth(*1) msize(*1.1) horizontal lcolor(emidblue*0.65)) || (dot coef n if source!="Natural Gas", horizontal mcolor(emidblue%65) msymbol(d)  msize(*1.1) ytitle("") barw(1.3) legend(off)) || (dot coef n if source=="Natural Gas", horizontal xtitle(" Vulnerability (EUR/MWh)", size(*0.77)) mcolor(maroon%87) msymbol(d)  msize(*1.1) ytitle("") title("A)",position(11) size(*0.59)) barw(1.3) legend(off) ylabel(,valuelabel labsize(*0.72) angle(horizontal)) xlabel(,labsize(*0.72)) xline(0, lwidth(*1))  fysize(30)) 
 
 //horizontal
 graph combine fig8 alldays, rows(2) imargin(b=0.05 t=0.05)

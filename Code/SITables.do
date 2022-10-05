@@ -266,3 +266,60 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "
 
 }
 
+
+
+***Data for SI Table 3: Multivariate regression alternative specifgications
+
+
+
+*No Controls
+use allcountries_noControls,clear
+replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+test Solar Wind Nuc Coal Gas HydroDispatch 
+outreg2 using SI3Multivariate.doc, replace se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+*NoFE
+use allcountries_noFE,clear
+replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+test Solar Wind Nuc Coal Gas HydroDispatch 
+outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+*No April
+use allcountries_noApril,clear
+replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+test Solar Wind Nuc Coal Gas HydroDispatch 
+outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+*No October
+use allcountries_noOct,clear
+replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+test Solar Wind Nuc Coal Gas HydroDispatch 
+outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+// *Load Shares
+// use allcountries_loadshares,clear
+// replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+// reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+// test Solar Wind Nuc Coal Gas HydroDispatch 
+// outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+*Alternative Vulnerability
+use allcountries_nonsig,clear
+replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+test Solar Wind Nuc Coal Gas HydroDispatch 
+outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+
+**Main specification
+use allcountries_genshares,clear
+replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
+reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+test Solar Wind Nuc Coal Gas HydroDispatch 
+outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
+
+*Output table but it is edited manually

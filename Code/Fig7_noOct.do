@@ -35,7 +35,7 @@ replace z1=12 if Country=="HU"
 
 robreg mm Intensity Nuc if exclude==0
 matrix b=e(b)
-twoway scatter Intensity Nuc if exclude==0, mlabel(labels) mlabvposition(z1) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("B",position(11) size(*1.3)) xtitle("Nuclear share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(nall,replace) ||function y=_b[Nuc]*x+_b[_cons],range(Nuc) || lfit Intensity Nuc if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Nuc if exclude==0, mlabel(labels) mlabvposition(z1) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("B)",position(11) size(*1.3)) xtitle("Nuclear share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(nall,replace) ||function y=_b[Nuc]*x+_b[_cons],range(Nuc) || lfit Intensity Nuc if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -68,7 +68,7 @@ replace z2=3 if Country=="AT"
 
 robreg mm Intensity Wind if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Wind if  exclude==0, mlabel(labels) mlabvposition(z2) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("D",position(11) size(*1.3)) xtitle("Wind share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) legend(off) name(wall,replace) || function y=_b[Wind]*x+_b[_cons],range(Wind) || lfit Intensity Wind if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Wind if  exclude==0, mlabel(labels) mlabvposition(z2) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("D)",position(11) size(*1.3)) xtitle("Wind share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) legend(off) name(wall,replace) || function y=_b[Wind]*x+_b[_cons],range(Wind) || lfit Intensity Wind if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -96,7 +96,7 @@ replace z3=4 if Country=="CZ"
 
 robreg mm Intensity Solar if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Solar if   exclude==0, mlabel(labels) mlabvposition(z3) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("C",position(11) size(*1.3)) xtitle("Solar share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(sall,replace) || function y=_b[Solar]*x+_b[_cons],range(Solar) || lfit Intensity Solar if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Solar if   exclude==0, mlabel(labels) mlabvposition(z3) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("C)",position(11) size(*1.3)) xtitle("Solar share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(sall,replace) || function y=_b[Solar]*x+_b[_cons],range(Solar) || lfit Intensity Solar if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -123,7 +123,7 @@ replace z4=6 if Country=="PT"
 
 robreg mm Intensity Coal if exclude==0
 matrix b=e(b)
-twoway scatter Intensity Coal if exclude==0, mlabel(labels) mlabvposition(z4) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("E",position(11) size(*1.3)) xtitle("Coal share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(call,replace) ||function y=_b[Coal]*x+_b[_cons],range(Coal) || lfit Intensity Coal if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Coal if exclude==0, mlabel(labels) mlabvposition(z4) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("E)",position(11) size(*1.3)) xtitle("Coal share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(call,replace) ||function y=_b[Coal]*x+_b[_cons],range(Coal) || lfit Intensity Coal if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -157,7 +157,7 @@ replace z5=3 if Country=="GR"
 
 robreg mm Intensity HydroDispatch  if exclude==0
 matrix b = e(b)
-twoway scatter Intensity HydroDispatch if  exclude==0, mlabel(labels) mlabvposition(z5) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("F",position(11) size(*1.3)) xtitle("Hydro (dispatch) share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) legend(off) name(hall,replace) || function y=_b[HydroDispatch]*x+_b[_cons],range(HydroDispatch) || lfit Intensity HydroDispatch if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity HydroDispatch if  exclude==0, mlabel(labels) mlabvposition(z5) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("F)",position(11) size(*1.3)) xtitle("Hydro (dispatch) share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) legend(off) name(hall,replace) || function y=_b[HydroDispatch]*x+_b[_cons],range(HydroDispatch) || lfit Intensity HydroDispatch if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -186,7 +186,7 @@ replace z6=3 if Country=="HU"
 
 robreg mm Intensity Gas if exclude==0
 matrix b = e(b)
-twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("A",position(11) size(*1.3)) xtitle("Gas share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(gall,replace) || function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Gas if   exclude==0, mlabel(labels) mlabvposition(z6) mlabsize(*1.4) msymbol(d) mcolor(maroon%75) msize(*1.65) color(navy) graphregion(lstyle(none)) title("A)",position(11) size(*1.3)) xtitle("Gas share",size(*1.5)) ylabel(,labsize(*1.4) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Estimated Average Price Change,size(*1.5)) name(gall,replace) || function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
 
 
 
