@@ -1,7 +1,7 @@
 # "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis" Replication Package
 ### Raúl Bajo, Antonio Bento, Daniel Kaffine, and Zissis Marmarelis
 
-#### The following repository contains the datasets and code used to generate each figure and result in the paper "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis". The model output was generated in STATA.
+#### The following repository contains the datasets and code used to generate each figure and result in the paper "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis". The model output was generated in STATA. Any questions with the code or data please contact zmarmare@usc.edu
 
 ## Datasets 
 
