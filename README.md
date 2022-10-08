@@ -18,11 +18,11 @@
 
  * Fig1.do: Generates Figure 1 (3 Panels) using the datasets in *Other datasets*.
  
- * HourlyEstimates.do: Generates vulnerability metrics and creates dataset with all countries (see Combined datasets). Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figures 4, Panel B of Figure 5, EDF4-6, and SI Map Figures (S1-S6) [^1].
+ * HourlyEstimates.do: Generates vulnerability metrics and creates dataset with all countries (see *combined* datasets). Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figures 4, Panel B of Figure 5, EDF4-6, and SI Map Figures (S1-S6) [^1].
  
  * Fig5.do: Generates Panel C,D,E of Figure 5. Also estimates average coefficients (included in generated excel sheet) used for Panel A. Uses *country* datasets.
  
- * Fig6.do: Generates Figure 6. Uses country datasets. Legend is edited manually for visual purposes.
+ * Fig6.do: Generates Figure 6. Uses *country* datasets. Legend is edited manually for visual purposes.
  
  * fig7_gen.do: Generates Figure 7 (and Figure S6 making the minor modification specified in code). Also generates Table EDF4 (multivariate regression of shares on vulnerability). Uses *combined* datastes.
  
