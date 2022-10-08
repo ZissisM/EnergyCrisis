@@ -22,7 +22,7 @@
  
  * Fig5.do: Generates Panel C,D,E of Figure 5. Also estimates average coefficients (included in generated excel sheet) used for Panel A. Uses *country* datasets.
  
- * Fig6.do: Generates Figure 6. Uses country datasets.
+ * Fig6.do: Generates Figure 6. Uses country datasets. Legend is edited manually for visual purposes.
  
  * fig7_gen.do: Generates Figure 7 (and Figure S6 making the minor modification specified in code). Also generates Table EDF4 (multivariate regression of shares on vulnerability). Uses *combined* datastes.
  
