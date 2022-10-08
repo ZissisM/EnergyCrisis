@@ -52,4 +52,4 @@
 
  * Entso-e Pandas Client was used to download the data. This can be found [here](https://github.com/EnergieID/entsoe-py).
  
- [^1]: The website tool Datawrapper.de was used for the construction of maps for the Figures with our estimated results. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 5).
+ [^1]: The website tool Datawrapper.de ([link]) (https://datawrapper.dwcdn.net/B37ic/1/) was used for the construction of maps for the Figures with our estimated results. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 5).
