@@ -72,3 +72,18 @@ local c = Country
 graph combine `y'lev `y'source2 `y'cap1 `y'load `y'price `y'sourcere `y'capf `y'box , name(`y'_hourly,replace) altshrink title(`c') rows(2) 
 graph export `y'_hourly, as(jpg) replace
 }
+
+
+
+
+**Austria Autocorrelation residual plot (Figure S11)
+use AT_new
+reg wholesale_test gas_p RE_gen c.load##c.load i.month#i.hour i.dow#i.hour, cl(dt)
+predict residual,r
+ac residual, lags(72)
+
+**France Autocorrelation residual plot (Figure S20)
+use FR_new
+reg wholesale_test gas_p RE_gen c.load##c.load i.month#i.hour i.dow#i.hour, cl(dt)
+predict residual,r
+ac residual, lags(72)
