@@ -5,7 +5,7 @@
 
 ## Datasets 
 
-* In /Data one will find 3 folders:
+* In /Datasets one will find 3 folders:
 
  * *Contry datasets* include the data used for each country, analyzed individually, for our sample period (April 1 2021-October 31 2021). These include the hourly wholesale electricity price, hourly load, and hourly energy generation by source, as described in Supplementary Discussion 2. Also included are the individual TSOs of Germany and Norway. These are named according to their two letter official country abbreviation, and the ending of '_new'.
 
