@@ -1,7 +1,7 @@
 # "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis" Replication Package
 ### Raúl Bajo, Antonio Bento, Daniel Kaffine, and Zissis Marmarelis
 
-#### The following repository contains the datasets and code used to generate each figure and result in the paper "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis". The model output was generated in STATA. Any questions with the code or data please contact zmarmare@usc.edu
+#### The following repository contains all of the raw data and  curated datasets and code used to generate each figure and result in the paper "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis". The model output was generated in STATA. Any questions with the code or data please contact zmarmare@usc.edu
 
 ## Datasets 
 
@@ -16,9 +16,9 @@
 
 **Main Text Figures**
 
- * Fig1.do: Generates Figure 1 (3 Panels) using the datasets in *Other datasets*.
+ * Fig1.do: Generates Figure 1 (3 Panels) using the datasets in *Other datasets*.[^1] 
  
- * HourlyEstimates.do: Generates vulnerability metrics and creates dataset with all countries (see *combined* datasets). Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figures 4, Panel B of Figure 5, EDF4-6, and SI Map Figures (S1-S6) [^1].
+ * HourlyEstimates.do: Generates vulnerability metrics and creates dataset with all countries (see *combined* datasets). Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figures 4, Panel B of Figure 5, EDF4-6, and SI Map Figures (S1-S6) [^2].
  
  * Fig5.do: Generates Panel C,D,E of Figure 5. Also estimates average coefficients (included in generated excel sheet) used for Panel A. Uses *country* datasets.
  
@@ -52,4 +52,6 @@
 
  * Entso-e Pandas Client was used to download the data. This can be found [here](https://github.com/EnergieID/entsoe-py).
  
- [^1]: The website tool [Datawrapper.de](https://datawrapper.dwcdn.net/B37ic/1/) was used for the construction of maps for the Figures with our estimated results. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 5).
+ 
+ [^1]: Running particular code may require the manual selection of the different dataset folders provided.
+ [^2]: The website tool [Datawrapper.de](https://datawrapper.dwcdn.net/B37ic/1/) was used for the construction of maps for the Figures with our estimated results. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 5).
