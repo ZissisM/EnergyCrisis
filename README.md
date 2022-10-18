@@ -16,7 +16,9 @@
 
 **Main Text Figures**
 
- * Fig1.do: Generates Figure 1 (3 Panels) using the datasets in *Other datasets*.[^1] 
+ * Fig1.do: Generates Figure 1 (3 Panels) using the datasets in *Other* datasets.[^1] 
+ 
+ * Fig2.do: Generates Figure 2 using *Combined* dataset
  
  * HourlyEstimates.do: Generates vulnerability metrics and creates dataset with all countries (see *combined* datasets). Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figures 4, Panel B of Figure 5, EDF4-6, and SI Map Figures (S1-S6) [^2].
  
