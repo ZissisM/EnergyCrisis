@@ -1,7 +1,10 @@
 
+**Calculation of absolute Vulnerability
+
+
 **Excel of all possible baselines to use 
-*Ended up using 2016-current 
-*where current is the sample start at April 2021
+*Ended up using 2016-current (B1) 
+*where current is the sample start at April 1 2021
 putexcel set baselines2, replace
 putexcel A1 = "Country"
 putexcel B1= "2016-current"
@@ -10,9 +13,6 @@ putexcel D1="2018-current"
 putexcel E1="2019-current"
 putexcel F1="2020-current"
 putexcel G1="2021-current"
-
-
-
 
 
 
@@ -42,6 +42,22 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "H
 
 
 *Calculate absolute Vulnerability
+
+*basic formula using relative and non-pass through hours
+*given that these variables were already created in all countries_genshares
+
+
+
+local basedir : di c(pwd)
+local datadir = "`basedir'/../Datasets/Combined datasets"
+local datafile = "`datadir'/allcountries_genshares.dta"
+cd "`datadir'"
+use "`datafile'"
+
+use allcountries_genshares
+
+
+
 
 replace baseline= b2016
 replace relV= Hours_PT*(baseline+Intensity)

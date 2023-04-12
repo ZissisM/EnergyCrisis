@@ -1,7 +1,11 @@
 *All 6 energy shares vs. Relative Vulnerability 
+*Not actually used to generate any Figure used, but interesting to see if desired 
 
-***Generate SI Figure 3 for Nuclear, Solar, Wind panels of hour-groups (instead of entire day), see Extended Data Figure XX
-*where intensity is relative vulnerability 
+*where intensity is relative vulnerability !
+
+
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
+*in combined datasets
 
 grstyle clear
 grstyle init
@@ -194,26 +198,6 @@ graph export SI_absVscatters.jpg, replace
 
 
 
-
-
-***Low Carbon***
-//  gen lowcarb=Hydro_R+HydroDispatch+Wind+Solar+Nuc+Other*0.5
-//  robreg mm Intensity lowcarb if exclude==0
-//  matrix b=e(b)
-//  cap gen z7=1 
-// replace z7= 3 if Country=="CZ"
-// replace z7= 9 if Country=="LT"
-// replace z7= 2 if Country=="DE"
-// replace z7= 4 if Country=="NO"
-// replace z7= 10 if Country=="CH"
-// replace z7= 3 if Country=="RO"
-// replace z7= 11 if Country=="HU"
-// replace z7= 4 if Country=="SI"
-
-
-// twoway scatter Intensity lowcarb if exclude==0, mlabel(labels) mlabvposition(z7) mlabsize(*1.5) msymbol(d) mcolor(maroon%75) msize(*1.5) color(navy) graphregion(lstyle(none)) title("",position(11) size(*1.3)) xtitle("Low carbon share",size(*1.4)) ylabel(,labsize(*1.5) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.5)) ytitle(Vulnerability (EUR/MWh),size(*1.5)) name(nall,replace) || function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit Intensity lowcarb if exclude==0, lcolor(ebblue*0.5) 
-
-// sqreg Intensity lowcarb, q(0.25 0.5 0.75)
 
 
 

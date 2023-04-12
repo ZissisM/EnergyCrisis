@@ -1,6 +1,8 @@
 
 *EDF Table 4*
 ****Multivariate regression****
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
+*in combined datsets
 use allcountries_genshares
 
 *AbsV
@@ -17,7 +19,7 @@ test Solar Wind Hydro_R Nuc Coal Gas HydroDispatch
 outreg2 using TableSImultivariateShares.doc, replace se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2 ctitle("Absolute Vulnerability")
 
 
-*
+*2nd column for relative vulnerability in table 
 label var Intensity "Relative Vulnerability"
 reg Intensity Solar Wind Hydro_R Nuc Coal Gas HydroDispatch,vce(robust)
 test Solar Wind Hydro_R Nuc Coal Gas HydroDispatch 

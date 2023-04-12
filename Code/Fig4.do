@@ -1,4 +1,5 @@
-***Figure 5 generation Panels C,D,E
+***Figure 4 generation Panels C,D,E
+
 *Maps A and B were constructed using outside software (https://app.datawrapper.de) but with esitmates from here:
 *Map A used the average column (K1 one excel) and the corresponding confidence intervals as the inputs for the average pass-through coefficient
 *Map B used estimates from HourlyEstimates.do for the number of hours of pass-through in a day 
@@ -8,7 +9,11 @@ set scheme white_tableau
 
 **Regressions for each country by hour group (and entire day "average") exported to excel, then improted again into new file (Fig5_Level)
 
-putexcel set Fig5_Level, replace
+*in Country datasets
+ cd ~/Downloads/Nature_Energy_Crisis/Datasets/Country datasets
+
+
+putexcel set Fig4_Level, replace
 
 putexcel A1 = "Country"
 putexcel B1= " am_coef" //coefficient
@@ -93,10 +98,10 @@ foreach x in "GR"{
 }
 
 
-***Levels figure*** GENERATE FIGURE 5 Panel C D E **saved as Fig4_new
+***Levels figure*** GENERATE FIGURE 4 Panel C D E **saved as Fig4_new
 
-***Import the excel sheet into Stata and save as Fig5_level***
-import excel "Fig5_Level.xlsx", sheet("Sheet1") firstrow clear
+***Import the excel sheet into Stata and save as Fig4_level***
+import excel "Fig4_Level.xlsx", sheet("Sheet1") firstrow clear
 
 
 *input country variable name manually for labeling
@@ -143,7 +148,11 @@ label var pmm_coef "Evening"
 label var am_sig "0: gray, 1: blue, 2: red, 3: green"
 label var n2 "ordering"
 
-*dataset already created 
+*dataset already created in 
+
+*in Other datsets
+cd ~/Downloads/Nature_Energy_Crisis/Datasets/Other datasets
+
 use Fig5,clear
 
 graph twoway (rcap  am_l am_h n2 if exlcude==0&am_sig==1, lwidth(*1.7) msize(*1.5) horizontal lcolor(navy*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot am_coef n2 if exlcude==0 & am_sig==1, horizontal xtitle("Pass-through coefficient", size(*1.4)) mcolor(navy%85) msymbol(d)  msize(*2.05) ysc(r(0 1)) ytitle("") title(" C) Overnight (12:00 - 9:00)",position(11) size(*0.95)) barw(1.3) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium) angle(horizontal))) || (dot am_coef n2 if exlcude==0 & am_sig==0, horizontal ysc(r(0 1)) msymbol(d)  mcolor(ltblue*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal)) name(a3,replace)) || (rcap  am_l am_h n2 if exlcude==0 &am_sig==0, lwidth(*1.7) msize(*1.5) horizontal lcolor(ltblue*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot am_coef n2 if exlcude==0 & am_sig==2, horizontal ysc(r(0 1)) msymbol(d)  mcolor(maroon*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal))) || (rcap  am_l am_h n2 if exlcude==0 &am_sig==2, lwidth(*1.7) msize(*1.5) horizontal lcolor(maroon*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot am_coef n2 if exlcude==0 & am_sig==3, horizontal ysc(r(0 1)) msymbol(d)  mcolor(emerald*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal))) || (rcap  am_l am_h n2 if exlcude==0 &am_sig==3, lwidth(*1.7) msize(*1.5) horizontal lcolor(emerald*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot am_coef n2 if exlcude==0 & am_sig==4, horizontal ysc(r(0 1)) msymbol(d)  mcolor(purple*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal))) || (rcap  am_l am_h n2 if exlcude==0 &am_sig==4, lwidth(*1.7) msize(*1.5) horizontal lcolor(purple*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9)))

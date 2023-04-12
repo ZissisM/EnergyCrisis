@@ -1,5 +1,11 @@
-//use "/Users/ZMarmarelis/Documents/GitHub/Nature_Energy_Crisis/Datasets/Combined datasets/allcountries_genshares.dta"
+*Used to generated Figure 3, creates 7 scatter plots and a table/figure(G)
 
+*use the allcountries_genshares in: 
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
+
+**use "/Users/ZMarmarelis/Documents/GitHub/Nature_Energy_Crisis/Datasets/Combined datasets/allcountries_genshares.dta"
+
+use allcountries_genshares
 **Generate Fig 3
 
 
@@ -7,14 +13,18 @@
 replace Solar = 0.038 in 7
 replace Solar = 0.0946 in 17
 
-*back to how data is downloaded
+*back to how data is downloaded (for now assumed that DK has 0.038 to avoid missing data)
+//replace Solar = 0 in 7
 replace Solar = 0.0230995 in 17
-replace Solar = 0 in 7
+
+*IRE computation
 replace solar_wind_hydror=Solar+Wind+Hydro_R
+*Decarbonized computation
 replace lowcarb = solar_wind_hydror+Nuc+HydroDispatch
 
-**B
+**Panel B
 
+*orientation of labels on plots
 replace m1=1 if Country=="DK"
 replace m1=9 if Country=="AT"
 replace m1=4 if Country=="RS"
@@ -41,7 +51,7 @@ replace m1=9 if Country=="NO"
 
 
 
-
+*mm for robust regression to discount outliers
 robreg mm absV solar_wind_hydror if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
@@ -49,7 +59,7 @@ twoway scatter absV solar_wind_hydror if exclude==0, mlabel(labels) mlabvpositio
 
 
 
-**E
+**Panel E
 
 robreg mm Intensity solar_wind_hydror if exclude==0
 cap gen m2=9 if Country=="DK"
@@ -76,7 +86,7 @@ twoway scatter Intensity solar_wind_hydror if exclude==0, mlabel(labels) mlabvpo
 
 
 
-**A
+**Panel A
 
 replace m3=4 if Country=="PL"
 replace m3=9 if Country=="DK"
@@ -106,7 +116,7 @@ matrix b=e(b)
 twoway scatter absV lowcarb if exclude==0, mlabel(labels) mlabvposition(m3) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("A)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Absolute Vulnerability (EUR/MWh),size(*1.47)) name(ad,replace) ||function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit absV lowcarb if exclude==0, lcolor(ebblue*0.5)
 
 
-**D
+** Panel D
 
 robreg mm Intensity lowcarb if exclude==0
 matrix b=e(b)
@@ -132,7 +142,7 @@ replace z7= 2 if Country=="BE"
 twoway scatter Intensity lowcarb if exclude==0, mlabel(labels) mlabvposition(z7) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*1.5) color(navy) graphregion(lstyle(none)) title("D)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.5)) ytitle(Relative Vulnerability (EUR/MWh),size(*1.47)) name(rd,replace) || function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit Intensity lowcarb if exclude==0, lcolor(ebblue*0.5) 
 
 
-**C
+** Panel C
 robreg mm absV Gas if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
@@ -164,7 +174,7 @@ twoway scatter absV Gas if exclude==0, mlabel(labels) mlabvposition(m4) mlabsize
 
 
 
-**F
+**Panel F
 robreg mm Intensity Gas if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
@@ -194,68 +204,27 @@ twoway scatter Intensity Gas if exclude==0, mlabel(labels) mlabvposition(m1) mla
 
 
 graph combine ad ai ag rd ri rg ,  name(aggreg2,replace) col(3) altshrink 
-//graph combine wsrha  wrshna,  name(aggreg2,replace) col(1) altshrink xcommon ycommon
-
-//graph combine aggreg1 aggreg2, name(aggreg,replace) altshrink
 
 
 
-**share of share of IRE to decarb
-
-
-
-// robreg mm absV IREratio [pweight=lowcarb] if exclude==0
-// matrix b=e(b)
-// **both OLS and mm lines included, in addition to dots for each Country
-// replace m9=4 if Country=="FR"
-// replace m9=3 if Country=="SK"
-// replace m9=9 if Country=="PL"
-// replace m9=9 if Country=="EE"
-// replace m9=11 if Country=="DK"
-// replace m9=12 if Country=="CH"
-// replace m9=3 if Country=="AT"
-
-
-// twoway scatter absV IREratio if exclude==0, mlabel(labels) mlabvposition(m9) mlabsize(*1.2) msymbol(d) mcolor(maroon%75) msize(*1.8) color(navy) graphregion(lstyle(none)) title(,position(11) size(*1.4)) xtitle("IRE/Decarbonized share ratio",size(*1.2)) ylabel(,labsize(*1.3) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.3)) ytitle(Absolute Vulnerability (EUR/MWh),size(*1.2)) name(weighted,replace) ||function y=_b[IREratio]*x+_b[_cons],range(IREratio) || lfit absV IREratio [pweight=lowcarb] if exclude==0, lcolor(ebblue*0.5)
-
-
-
-
-// robreg mm absV stableREratio if exclude==0
-// matrix b=e(b)
-// **both OLS and mm lines included, in addition to dots for each Country
-// replace m9=4 if Country=="FR"
-// replace m9=3 if Country=="SK"
-// replace m9=9 if Country=="PL"
-// replace m9=9 if Country=="EE"
-// replace m9=11 if Country=="DK"
-// replace m9=12 if Country=="CH"
-// replace m9=3 if Country=="AT"
-
-
-// twoway scatter absV stableREratio if exclude==0, mlabel(labels) mlabvposition(m9) mlabsize(*1.2) msymbol(d) mcolor(maroon%75) msize(*1.8) color(navy) graphregion(lstyle(none)) title(,position(11) size(*1.4)) xtitle("IRE/Decarbonized share ratio",size(*1.2)) ylabel(,labsize(*1.3) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.3)) ytitle(Absolute Vulnerability (EUR/MWh),size(*1.2)) name(rg,replace) ||function y=_b[stableREratio]*x+_b[_cons],range(stableREratio) || lfit absV stableREratio if exclude==0, lcolor(ebblue*0.5)
-
-
-
-
-**G Table
-
-
-
+**panel G (Table/figure)
+*Calculation for the wholesale prices at each gas price using the pass-through coefficients
+*Edited later by confirming values manually as some code did not turn out exact
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK"  {
-foreach y in "NO"  {
 
 use `y'_new
 cap drop `y'estidd2-`y'estidd41
+*main estimation
 reg wholesale_test gas_p RE_gen c.load##c.load i.month#i.hour i.dow#i.hour, cluster(dt)
 margins,at(gas_p=(5(1)600)) post
+*saved to variables
 matrix est=e(at),e(b)'
 svmat est,names(`y'estiddss)
 save `y'_new,replace
 }
 
 
-
+*Output to excel
 putexcel set fig6bs, replace
 
 
@@ -279,13 +248,14 @@ save `y'_new,replace
 local myrow = `myrow' + 1
 }
 
-*in github folder
+*in github folder called fig6b.dta
 use fig6b
 
 grstyle clear
 grstyle init
 grstyle set legend 6
 
+*potential ordering of variables simialr to Fig 1 (not used!)
 gen order=0
 replace order = 1 if labels=="Denmark"
 replace order = 2 if labels=="Estonia"
@@ -320,14 +290,15 @@ gsort lowcarb
 cap drop n n2
 gen n=_n
 
-*drop RO because such low pass-through that it did not make sense to do this
+*drop RO because such low pass-through that it did not make sense to do this and was not meaningful
 labmask n,values(labels)
 twoway bar cap150 cap125 cap100 n,horizontal fintensity(30 60 90) fcolor(forest_green ..) ylabel(1(1)23,valuelabel labsize(*0.98) angle(horizontal)) ysc(r(0 1)) ytitle("") xtitle("Necessary Natural Gas Price Cap (EUR/MWh)",size(*1.25)) title("G)",position(11) size(*1.2)) name(fig6b,replace) legend(size(*0.95) rows(3) order( 3 2 1) ) xlabel(#10, labsize(*1.1)) xline(180)
 
 
+
 **Responsivness/slope plot for 5 countries --> Figure 5 last panel 
 
-
+*saved as "country"f for each of the predicted prices based on each natural gas price increment, used for panel H
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
 	
 use `y'_new
@@ -337,7 +308,7 @@ margins,at(gas_p=(40(10)260)) saving(`y'f,replace)
 }
 
 
-** New H scatterplot and also EDF Fig 4
+** New Panel H scatterplot and also EDF Fig 4
 
 putexcel set fig3H, replace
 
@@ -358,7 +329,7 @@ putexcel B`myrow' = matrix(r(StatTotal))
 local myrow = `myrow' + 1
 }
 
-*save this as price180 variable
+*save this as price180 (at a 180 EUR/MWh cap) variable manually
 
 
 cap gen r2=1
@@ -367,7 +338,7 @@ replace r2=3 if Country=="SI"
 replace r2=12 if Country=="CZ"
 replace r2=6 if Country=="BG"
 
-
+*regress the price at 180 EUR/MWh on the decarbonized share
 robreg mm price180 lowcarb 
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
@@ -375,7 +346,7 @@ twoway scatter price180 lowcarb, mlabel(Country) mlabvposition(r2) mlabsize(*1.3
 
 
 
-**EDF Fig 4
+**EDF Fig 4, same as Panel H (above scatter) but using IRE share instead of decarbonized share
 
 cap gen r1=1
 replace r1=1 if Country=="DK"

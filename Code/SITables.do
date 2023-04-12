@@ -1,8 +1,10 @@
-***Robsutness Check Table Data
-*Tables edited manually given generated estimates/data from below
+***Robustness tables for SI generation 
+
+*Tables edited (aesthetically) manually given generated estimates/data from below
 
 
-
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Countr datasets
+*in Country datasets
 
 *** SI Table 1 and EDF2 for Specifications tests*** 
 foreach x in "AT" "FR" "IT" "PL" "PT" {
@@ -269,7 +271,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "
 
 
 
-***Data for SI Table 3: Multivariate regression alternative specifgications
+***Data for SI Table 3: Multivariate regression alternative specifgications (for relative vulnerability)
 
 
 
@@ -325,10 +327,3 @@ outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(
 
 *Output table but it is edited manually
 
-
-
-
-
-**Multivariate EDF 6
-
-reg absV Gas Solar Wind Hydro_R Nuc Coal HydroDispatch

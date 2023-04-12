@@ -1,5 +1,12 @@
+*SI Figure for Fig3 version using load as the denominator for the shares instead of total generation
+
+
 // use "/Users/ZMarmarelis/Documents/GitHub/Nature_Energy_Crisis/Datasets/Combined datasets/allcountries_genshares.dta"
-**Generate Fig3
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
+
+*use allcountries_genshares
+
+**Generate Fig3 equivalent (SI Figure)
 
 
 **to adjust for DK and NL
@@ -11,6 +18,7 @@ replace Solar = 0.038 in 7
 //replace Solar = . in 7
 
 **B
+
 
 cap gen m1=1
 replace m1=1 if Country=="DK"
@@ -40,7 +48,7 @@ replace m1=10 if Country=="NO"
 
 
 
-
+*robust regression for outliers possibilities
 robreg mm absV solar_wind_hydror if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country

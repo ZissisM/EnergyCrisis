@@ -1,9 +1,17 @@
+*SI Figure for Fig3 version excluding the month of october October
 
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
 
+*use allcountries_noOct
 use "/Users/ZMarmarelis/Documents/GitHub/Nature_Energy_Crisis/Datasets/Combined datasets/allcountries_noOct.dta"
 
 
-**B
+
+
+
+**Panel B
+
+*orientationof labels 
 cap gen m1=1
 replace m1=7 if Country=="DK"
 replace m1=9 if Country=="AT"
@@ -182,9 +190,4 @@ twoway scatter Intensity Gas if exclude==0, mlabel(labels) mlabvposition(m8) mla
 
 
 
-
-
 graph combine ad ai ag rd ri rg,  name(fig3_noOct,replace) col(3) altshrink 
-//graph combine wsrha  wrshna,  name(aggreg2,replace) col(1) altshrink xcommon ycommon
-
-//graph combine aggreg1 aggreg2, name(aggreg,replace) altshrink

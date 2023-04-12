@@ -1,4 +1,4 @@
-***Generation Figure 6***
+***Generation Figure 5***
 
 
 grstyle clear
@@ -57,6 +57,7 @@ grc1leg PLlevf4 PLsource2f4, altshrink legendfrom(PLsource2f4) name(PLg,replace)
 
 
 **Responsivness/slope plot for 5 countries --> Figure 5 last panel 
+*Panel F generation
 
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
 //foreach y in "AT" "FR" "IT" "PL" "PT" {
@@ -73,12 +74,13 @@ grstyle init
 grstyle set legend 12,inside
 
 
+
 // combomarginsplot ATf FRf ITf PTf PLf, labels("Austria" "France" "Italy" "Portugal" "Poland") noci xtitle("Natural Gas Price Cap (EUR/MWh)",size(*1.25)) ytitle("Maximum Wholesale Electricity Price (EUR/MWh)",size(*1.2))  title("F)",position(11) size(*1.5)) ylabel(,format(%2.0f) labsize(*1.2)) xlabel(,labsize(*1.1)) legend(rows(1) size(*1.3)) xlabel(#12, labsize(*1.1)) name(pricecap,replace)
 
 combomarginsplot ATf FRf ITf PTf PLf, labels("Austria" "France" "Italy" "Portugal" "Poland") noci xtitle("Natural Gas Price Cap (EUR/MWh)",size(*1.3)) ytitle("Maximum Wholesale Electricity Price (EUR/MWh)",size(*1.24))  title("F)",position(11) size(*1.25)) ylabel(,format(%2.0f) labsize(*1.2)) xlabel(,labsize(*1.1)) legend(off)  lplot1(color(gs2*0.9)) xlabel(#12, labsize(*1.1)) name(pricecap,replace) text(380 268 "Italy" 350 274 "Portugal" 244 271 "France" 180 271 "Austria" 140 271 "Poland") graphregion(margin(r+10))
 
 
 
-//Figure 6: 5 Country Panels of Hourly Profiles, edit manually the positioning of panels
+//Figure 6: 5 Country Panels of Hourly Profiles and panel F, slightly edit manually the positioning of panels and legends
 
 graph combine ATg FRg ITg PTg PLg pricecap, altshrink name(fig32,replace)  rows(3)

@@ -1,11 +1,15 @@
-*Used to further clean and to obtain decarbonization shares for each country 
+***Used to further clean and to obtain decarbonization shares for each country 
+*Not meant to run but here for demontration purposes of data cleaning and organizing
 
 *DE NO?
+
+
+cd ~/Downloads/Nature_Energy_Crisis/Datasets/Country datasets
+
+
+*Calculate all energy share agglomerations, based on earlier cleaned data of total generation
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "PL" "PT" "RO" "RS" "SI" "SK" {
 	use `y'_gen
-//gen RE_gen = RE_share*country_Total
-//replace country_total = country_total-Imports 
-//cap drop RE_share
 
 cap drop Gas_share
 cap drop Lignite_share
@@ -39,31 +43,22 @@ cap replace Nuclear_share= gen_Nuc/total_gen
 
 save `y'_gen,replace
 }
+
+
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "PL" "PT" "RO" "RS" "SI" "SK" {
 	use `y'_gen
 
 	gen decarb = RE_share+Nuclear_share+Hydro_share
 	
-	//gen my=ym(yr,month)
+	cap gen my=ym(yr,month)
 	egen decarb_month=mean(decarb),by(my)
-	
-	//drop decarb decarb_month RE_share Nuclear_share Hydro_share country_total Hydro_dis 
-	
-	//egen total_gen = rowtotal(RE_* gen_* Hydro_*)
-	//cap gen RE_share = RE_gen/total_gen
-	
-	//egen Hydro_dis=rowtotal(Hydro_*)
-	//cap gen Hydro_share = Hydro_dis/total_gen
 
-	
-	//gen Nuclear_share=0 
-	//cap replace Nuclear_share= gen_Nuc/total_gen
 	
 save `y'_gen,replace
 }
 
+**Excel output of decabronized data
 
-*decarbs has NO and DE averages
 putexcel set decarbs_t, replace
 
 putexcel A1 = "Country"
@@ -95,6 +90,7 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Tennet" "DE_Amprion" "DE_Tra
 }
 
 
+**Step 1 as above done for each subset of Germany and Norway, who had different data formats and more disaggregated
 foreach y in "DE_50Hz" "DE_Tennet" "DE_Amprion" "DE_TransnetBW" "NO_1" "NO_2" "NO_3" "NO_4" {
 	
 use `y'_gen
@@ -140,7 +136,9 @@ egen decarb_month=mean(decarb),by(my)
 save `y'_gen,replace
 }
 	
+
 	
+*monthly averages into the total country dataset
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Tennet" "DE_Amprion" "DE_TransnetBW"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO_1" "NO_2" "NO_3" "NO_4" "PL" "PT" "RO" "RS" "SI" "SK"  {
 		
 merge m:1 t using `y'_gen, keepusing(decarb_month)
@@ -155,21 +153,20 @@ save RE_spag,replace
 
 
 
+**Earlier celeaned the data generation used for all generations. 
 
 foreach y in "AT" "BE" "BG" "CH" "CZ_" "DE_50Hertz" "DE_TenneT" "DE_Amprion" "DE_TransnetBW" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "NO-1" "NO-2" "NO-3" "NO-4" "PL" "PT" "RO" "RS" "SI" "SK"  {
 use `y'_gennew
-// preserve
-// keep if country=="`y'"
-// save `y'_gennew,replace
-// restore 
 
 
 
+*removed missing duplicates of time-generation
 sort t type type_generation_time
 by t type: gen dup=cond(_N==1,0,_n) 
 gen tag = 1 if dup==2 & type_generation==.
 drop if tag==1
 drop tag dup
+**if non-missing, remove the smallest one (usually 1 or 2 comapred to 100 vs 200, i.e. orders of magnitude different)
 by t type: gen dup=cond(_N==1,0,_n) 
 drop if dup==1
 drop dup 
@@ -184,7 +181,6 @@ save `y'_gennew,replace
 // format t %tc
 //rename time date
 
-
 // label var t Time
 // label var Imports "Total Imports at time"
 // label var day "Day of Month"
@@ -195,67 +191,11 @@ save `y'_gennew,replace
 }
 
 
-// duplicates tag type t, gen(flag)
-// list type flag t gen_ if flag>0 //if missing values remove the duplicates 
-// drop if flag>0 & missing(gen_)
-// //drop if flag>0 & gen_==0
-// drop flag
-// sort t type gen_
-// by t type: gen dup=cond(_N==1,0,_n) 
-// reshape wide gen_, i(t) j(type) string
 
 
 
 
-**accidentally overwrote to _gen aswell
-foreach y in "AT" "BE" "BG" "CH" "CZ_" "DE_50Hertz" "DE_TenneT" "DE_Amprion" "DE_TransnetBW" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "NO-1" "NO-2" "NO-3" "NO-4" "PL" "PT" "RO" "RS" "SI" "SK"  {
-use `y'_gennew
-
-	rename t time
-	gen date=date(time, "YMDhms#")
-	format date %td
-gen double t = clock(time, "YMDhms#")
-format t %tc
-gen yr=year(date)
-gen month=month(date)
-
-
-cap rename gen_Solar RE_solar
-cap rename gen_Wind_onshore RE_wind_on
-cap rename gen_Wind_onshore RE_wind_off
-cap rename gen_Hydro_run RE_hydro
-cap rename gen_Geothermal RE_geo
-cap rename gen_Other_renewable RE_other
-
-egen total_gen = rowtotal(RE_* gen_*)
-
-egen RE_gen = rowtotal(RE_*)
-cap gen RE_share = RE_gen/total_gen
-
-cap rename gen_Hydro_storage Hydro_ds
-cap rename gen_Hydro_reservoir Hydro_dr
-cap gen Hydro_initialize=0
-
-egen Hydro_dis=rowtotal(Hydro_*)
-cap gen Hydro_share = Hydro_dis/total_gen
-cap gen Hydro_share=0 if Hydro
-
-cap gen Nuclear_share=0 
-cap replace Nuclear_share= gen_Nuc/total_gen
-
-gen decarb = RE_share+Nuclear_share+Hydro_share
-	
-gen my=ym(yr,month)
-egen decarb_month=mean(decarb),by(my)
-
-
-save `y'_gennew,replace
-
-}
-
-// use RE_spag
-//  drop AT_decarb-SK_decarb
-
+***Using monthly averages, calculate the RE shares and decabonized share s***
 
 	
 *"NO-1" "NO-2" "NO-3" "NO-4"
@@ -283,7 +223,7 @@ putexcel E1= "decarb_2016_2021"
 putexcel F1="decarb_noct"
 
 
-
+*Excel output
 *HR only 2019 and on
 local myrow = 2
 foreach y in "AT" "BE" "BG" "CH" "CZ_" "DE_50Hertz" "DE_TenneT" "DE_Amprion" "DE_TransnetBW" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "NO-1" "NO-2" "NO-3" "NO-4" "PL" "PT" "RO" "RS" "SI" "SK"  {
@@ -313,8 +253,8 @@ foreach y in "AT" "BE" "BG" "CH" "CZ_" "DE_50Hertz" "DE_TenneT" "DE_Amprion" "DE
 *deca.dta
  
  
- 
- *en DE_decarb = DE_50Hertz_decarb*0.21255+ DE_TenneT_decarb*0.29683+ DE_Amprion_decarb*0.3696+ DE_TransnetBW_decarb*0.120458
+ ***how germany is weighted by load 
+ *gen DE_decarb = DE_50Hertz_decarb*0.21255+ DE_TenneT_decarb*0.29683+ DE_Amprion_decarb*0.3696+ DE_TransnetBW_decarb*0.120458
 
 
 label var AT_decarb "Austria"
@@ -342,7 +282,11 @@ label var RS_decarb "Serbia"
 label var SI_decarb "Slovenia"
 label var SK_decarb "Slovakia"
 
+
 twoway line AT_decarb-BG_decarb CZ_decarb DE_decarb DK_decarb-SK_decarb CH_decarb my, lcolor(ltblue forest_green cranberry dimgray cyan dknavy gold emerald yellow purple mint lavender orange_red midblue sand erose magenta olive dkorange sienna) ytitle("Decarbonized energy generation share",size(*1.15)) xtitle("") 
+
+
+*region averages
 
 gen north = (DK_decarb+ EE_decarb+ FI_decarb+ LT_decarb+ NL_decarb+ NO_decarb)/6
 *RS missingbefore 2017
@@ -361,7 +305,7 @@ replace east= (BG_decarb+ HU_decarb+ PL_decarb+ RO_decarb+ SK_decarb)/5
  
  twoway dot Percentchange n, horizontal xtitle("Percent increase decarbonized energy generation share (2016-2021)", size(*1.2)) mcolor(maroon%65) msymbol(d)  msize(*1.7) ytitle("") barw(1.3) legend(off) ylabel(1(1)24,valuelabel labsize(*1.2) angle(horizontal)) xlabel(,labsize(*1.2))
  
- 
+ *Exploratory analysis of decabonization by countries
  
  
  foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
@@ -371,7 +315,7 @@ egen `y'_capacity2=mean(`y'_decarb),by(yr)
 twoway line AT_capacity2-SK_capacity2 yr, lcolor(ltblue*0.7 green*0.7  cranberry*0.7  emidblue cyan*0.7 dknavy*0.7  gold*0.5  erose*0.7  orange*0.7  purple*0.7  mint*0.7  lavender orange_red*0.7  midblue*0.7  sand*0.7 erose*0.7  black*0.8 red*0.7  dkorange sienna*0.7) mcolor(ltblue*0.7 green*0.7  cranberry*0.7  emidblue cyan*0.7 dknavy*0.7  gold*0.5  erose*0.7  orange*0.7  purple*0.7  mint*0.7  lavender orange_red*0.7  midblue*0.7  sand*0.7 erose*0.7  black*0.7 red*0.7  dkorange sienna*0.7  ) ytitle("Decarbonized energy generation share",size(*1.15)) xtitle("") title("C)", size(*1.2) position(11))
 
 
-
+*labels
 label var AT_capacity "Austria"
 label var BE_capacity "Belgium"
 label var BG_capacity "Bulgaria"
@@ -424,9 +368,9 @@ label var SI_capacity2 "Slovenia"
 label var SK_capacity2 "Slovakia"
 
 
- 
+ **Calculate yearly decabonized shares
  // "DE"
- foreach y in    "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" "AT" {
+ foreach y in    "AT" "BE" "BG" "CH" "CZ" "DK" "DE" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" "AT" {
 use `y'_gennew,clear
 cap drop `y'_dc
  egen `y'_dc=max(decarb) if yr>2015,by(yr)
@@ -438,8 +382,7 @@ cap drop `y'_dc
   }
 
   
-  
-
+ *Output them to excel
 putexcel set newdecarb, replace
 putexcel A1 = "Country"
 putexcel B1= "decarb 2016"
@@ -448,9 +391,6 @@ putexcel D1= "decarb 2018"
 putexcel E1= "decarb 2019"
 putexcel F1= "decarb 2020"
 putexcel G1= "decarb 2021"
-
-
-
 
 
 
@@ -480,6 +420,7 @@ foreach y in "AT" "BE" "BG" "CH" "DK" "EE" "ES" "FI" "FR" "GR" "HU" "IT" "LT" "N
 
   
 
+  ***Re-do export of shares 
 putexcel set newshares, replace
 putexcel A1 = "Country"
 putexcel B1= "Nuc "
@@ -489,10 +430,6 @@ putexcel E1= "Solar"
 putexcel F1= "Wind"
 putexcel G1= "HydroDispatch"
 putexcel H1= "Hydro_R"
-
-
-
-
 
 
 local myrow = 2

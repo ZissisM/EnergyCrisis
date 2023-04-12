@@ -1,6 +1,6 @@
-***Figure 1 Prices Graph Generation
+***Figure 1 Generation
 
-**Panel C genration NEW **
+**Panel C genration **
 
 use wholesale_2021
 
@@ -37,19 +37,21 @@ twoway line cz_pr_wkm be_pr_wkm it_pun_wkm es_pr_wkm delu_wkm fi_pr_wkm pt_pr_wk
 
 
 
-**New panel D
+***Panel D
+
 *Triangles added manually in powerpoint according to data from historic wholesale (found in historic.dta or the means in allcountries_*), for mean value from January 2016-April 2021
 grstyle clear
 grstyle init
 grstyle set legend 9
 *manually add the rest of the X for historic wholesale prices
+*whisker plot for all countries 
 graph box north_h DK_pr ee_pr fi_pr lt_pr nl_pr no_pr central_h at_pr be_pr cz_pr fr_pr de_pr ch_pr east_h bg_pr hu_pr pl_pr ro_pr rs_pr sk_pr south_h hr_pr gr_pr it_pun pt_pr si_pr es_pr avg_h avg_wholesale2, nooutsides horizontal name(nowbox,replace) note("") legend(size(*1.08))  b1title("April 2021-October 2021 Wholesale Electricity Price (EUR/MWh)",size(*1.08)) intensity(75) lintensity(75) ylabel(,labsize(*1.3)) box(16, color(gs5) lcolor(black*0.7)) box(17, color(sienna) lcolor(black*0.7))  box(18, color(navy) lcolor(black*0.7)) box(19, color(sand*1.2) lcolor(black*0.7)) box(20, color(dkorange*1.2) lcolor(black*0.7)) box(21, color(olive_teal*1.2) lcolor(black*0.7)) box(22, color(lavender) lcolor(black*0.7))  box(23, color(maroon) lcolor(black*0.7)) box(24, color(emerald) lcolor(black*0.7))  yscale(range(0 200)) box(24, color(emerald) lcolor(black*0.7)) box(25, color(magenta*0.6) lcolor(black*0.7)) box(26,color(gold*0.7) lcolor(black*0.7)) box(27,color(dkorange) lcolor(black*0.7)) box(28, color(purple) lcolor(black*0.7))  box(30, color(blue*0.4) lcolor(black*0.7)) title("D)",position(11) size(*1.4)) yscale(titlegap(medium))
 
 
 
-**New panel A
+***Panel A
 
-**get the data
+**get the data (all countries decabonized monthly)
 use RE_spag
 
  foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
@@ -58,6 +60,8 @@ gen `y'cap2016=`y'_capacity2 if yr==2016
 gen `y'cap2021=`y'_capacity2 if yr==2021
  }
 
+ 
+ *Output decabonized averages for all countries
  putexcel set decarbs_t, replace
 
 putexcel A1 = "Country"
@@ -84,9 +88,13 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Tennet" "DE_Amprion" "DE_Tra
 
 }
 
-**save as deca.dta
+***save as deca.dta (all country decabonized averages)
 
-*Used to make the figure
+***Panel B generation
+
+
+cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
+
 use deca
 
 grstyle clear
@@ -100,6 +108,7 @@ replace region="Central" if labels=="Austria" | labels=="Belgium" | labels=="Cze
 replace region="Eastern" if labels=="Bulgaria" | labels=="Hungary" | labels=="Poland" | labels=="Romania" | labels=="Serbia"  | labels=="Slovakia"  
 replace region="Southern" if labels=="Croatia" | labels=="Greece" | labels=="Italy" | labels=="Portugal" | labels=="Slovenia" | labels=="Spain"
 
+*Spaces
 set obs `=_N+1'
 replace labels="A" if labels==""
 set obs `=_N+1'
@@ -149,13 +158,12 @@ sort order
  
  //graph hbar decarb_2021 decarb_2016,over(labels,sort(order) label(labsize(*0.92)))  graphregion(margin(l+18)) title("A)", position(11) size(*1.4)) legend(label(1 "Decarbonized Energy Share 2021") label(2 "Decarbonized Energy Share 2016") size(small) rows(1)) 
  
- **this one
+ **this one used to generate the panel
  graph dot decarb_2021 decarb_2016,over(labels,sort(order) label(labsize(*0.92))) marker(1,msymbol(d) mcolor(maroon*0.7) msize(*1.8)) marker(2,mcolor(ebblue*0.8) msize(*2))  graphregion(margin(l+18)) title("A)", position(11) size(*1.35)) legend(label(1 "Decarbonized Energy Share 2021") label(2 "Decarbonized Energy Share 2016") size(small) rows(1)) 
 
  
  
  
-//twoway connected AT_capacity2-SK_capacity2 yr, lcolor(ltblue*0.7 green*0.7  cranberry*0.7  emidblue cyan*0.7 dknavy*0.7  gold*0.5  erose*0.7  orange*0.7  purple*0.7  mint*0.7  lavender orange_red*0.7  midblue*0.7  sand*0.7 erose*0.7  magenta red*0.7  dkorange sienna*0.7 ) mcolor(ltblue*0.7 green*0.7  cranberry*0.7  emidblue cyan*0.7 dknavy*0.7  gold*0.5  erose*0.7  orange*0.7  purple*0.7  mint*0.7  lavender orange_red*0.7  midblue*0.7  sand*0.7 erose*0.7  magenta red*0.7  dkorange sienna*0.7  ) ytitle("Decarbonized energy generation share",size(*1.15)) xtitle("") title("A)", size(*1.2) position(11))
 
 
 
@@ -174,7 +182,7 @@ sort order
 
 
 
-**New Panel B
+** Panel B
 
 
 use "/Users/ZMarmarelis/Documents/GitHub/Nature_Energy_Crisis/Datasets/Combined datasets/allcountries_genshares.dta"

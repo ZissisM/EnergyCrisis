@@ -1,7 +1,9 @@
+**Not meant to run but illustrates the calcuation of shares of energy, depending on the different conditions (i.e., load denominator)
 *File for calculating generation shares and means for every country 
 *Updating allcountries datasets with new generation shares 
 
 
+* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Country datasets to use
 
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL"  "PL" "PT" "RO" "RS" "SI" "SK"  {
 	*Subset TSOs dealt with differently
