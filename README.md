@@ -20,9 +20,9 @@
 
  * HourlyEstimates.do: Generates relative vulnerability metrics and creates dataset with all countries (see *combined* datasets). The main econometric specification estimation program. Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figure 2 Maps, Vulnerabilities for Figure 3, Panel B of Figure 4, Extended Data Map Figures (EDF 2 & 4) and SI Map Figures (S1-S6) [^2].
  
-  *AbsVul.do: Used to calculate absolute vulnerability from the relative vulnerabilities. Uses *Combined* datasets. 
+  * AbsVul.do: Used to calculate absolute vulnerability from the relative vulnerabilities. Uses *Combined* datasets. 
   
-  *Fig3.do*: Generates Figure 3 scatter plots and the price cap table. Uses *combined* datasets.
+  * Fig3.do*: Generates Figure 3 scatter plots and the price cap table. Uses *combined* datasets.
   
  * Fig4.do: Generates Panel C,D,E of Figure 5. Also estimates average coefficients (included in generated excel sheet) used for Panel A. Uses *country* datasets.
  
@@ -42,11 +42,11 @@
  
  * SITables.do: Generates data for the tables shown in Extended Data (Tables EDF3, EDF4, EDF5, EDF6) and SI section (Tables S1, S2, S3). Uses *country* datasets. These are heavily edited later to format appropriately and make final tables.
  
- *Multivariate_EDF4.do: Generates the multivariate regression table of the two vulnerability metrics against each energy share, as shown in EDF Table 4.
+ * Multivariate_EDF4.do: Generates the multivariate regression table of the two vulnerability metrics against each energy share, as shown in EDF Table 4.
  
  **Cleaning Code**
  
- *decarb_calculate.do: Used to calculate the decarbonization shares for each country and get them into an appropriate dataset format. Uses *country* datasets. 
+ * decarb_calculate.do: Used to calculate the decarbonization shares for each country and get them into an appropriate dataset format. Uses *country* datasets. 
  
  * redoShares.do: Used to re-calculate generation shares used for Figure 7 by making modifications to the denominator. Uses *country* datasets.
  
