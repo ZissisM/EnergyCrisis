@@ -18,7 +18,7 @@
 
  * Fig1.do: Generates Figure 1 (4 Panels) using the datasets in *Combined* and *Other* datasets.
 
- * HourlyEstimates.do: Generates relative vulnerability metrics and creates dataset with all countries (see *combined* datasets). The main econometric specification estimation program. Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figure 2 Maps, Vulnerabilities for Figure 3, Panel B of Figure 4, Extended Data Map Figures (EDF 2 & 4) and SI Map Figures (S1-S6) [^2].
+ * HourlyEstimates.do: Generates relative vulnerability metrics and creates dataset with all countries (see *combined* datasets). The *main* econometric specification estimation program. Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figure 2 Maps, Vulnerabilities for Figure 3, Panel B of Figure 4, Extended Data Map Figures (EDF 2 & 4) and SI Map Figures (S1-S6) [^2].
  
   * AbsVul.do: Used to calculate absolute vulnerability from the relative vulnerabilities. Uses *Combined* datasets. 
   
