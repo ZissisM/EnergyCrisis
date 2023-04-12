@@ -6,7 +6,7 @@ grstyle init
 grstyle set legend 6
 
 //foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Amprion" "DE_Tennet" "DE_TransnetBW" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO_1" "NO_2" "NO_3" "NO_4" "PL" "PT" "RS" "SI" "SK"  {
-foreach y in "DE" "NO" {
+foreach y in "CH" {
 use `y'_new,clear
 
 

@@ -1,6 +1,6 @@
 ***Figure 1 Prices Graph Generation
 
-**Panel A genration **
+**Panel C genration NEW **
 
 use wholesale_2021
 
@@ -26,7 +26,7 @@ cap egen avg_wholesale_wk = mean(avg_wholesale2),by(wk)
 label var avg_wholesale_wk "Average Wholesale Electricity Price"
 
 *Generate Prices graph -- Panel A
-twoway line cz_pr_wkm be_pr_wkm it_pun_wkm es_pr_wkm delu_wkm fi_pr_wkm pt_pr_wkm fr_pr_wkm gr_pr_wkm ro_pr_wkm hr_pr_wkm hu_pr_wkm nl_pr_wkm sk_pr_wkm si_pr_wkm rs_pr_wkm  ch_pr_wkm pl_pr_wkm ee_pr_wkm wk, name(b1,replace) lwidth(thin) yaxis(1) ytitle( "Wholesale Electricity Price (Euro/MWh)") xlabel(#4,labsize(*1.1)) lcolor(bluishgray ...) ylabel(,labsize(*1.2) axis(1))  || line gas_p_wk wk, yaxis(2) ytitle("TTF Natural Gas Price (Euro/MWh)",size(*1.2) axis(2)) ylabel(,labsize(*1.2) axis(2)) lcolor(black) lwidth(thick) title("A)", size(*1.4) position(11)) xtitle("") xlabel(13 "April 1 2021" 26 "July 1 2021" 44 "November 1 2021",labsize(*1.1)) || line at_pr_wkm  dk1_wkm lt_pr_wkm no_pr_wkm wk, lwidth(thin) yaxis(1) ytitle( "Wholesale Electricity Price (Euros/MWh)",size(*1.3)) xlabel(#4) lcolor(bluishgray ...) || line avg_wholesale_wk wk, yaxis(1) lcolor(red) lwidth(thick) xlabel(13 "April 1 2021" 26 "July 1 2021" 35 "September 1 2021" 44 "November 1 2021")  legend(position(6) size(*1.15) order( 1 24 25) rows(2)  label (1  "Individiual Country Wholesale  Price") label(2 "Natural Gas Price") label(3 ("Average Wholesale Electricity Price"))) 
+twoway line cz_pr_wkm be_pr_wkm it_pun_wkm es_pr_wkm delu_wkm fi_pr_wkm pt_pr_wkm fr_pr_wkm gr_pr_wkm ro_pr_wkm hr_pr_wkm hu_pr_wkm nl_pr_wkm sk_pr_wkm si_pr_wkm rs_pr_wkm  ch_pr_wkm pl_pr_wkm ee_pr_wkm wk, name(b1,replace) lwidth(thin) yaxis(1) ytitle( "Wholesale Electricity Price (Euro/MWh)") xlabel(#4,labsize(*1.1)) lcolor(bluishgray ...) ylabel(,labsize(*1.2) axis(1))  || line gas_p_wk wk, yaxis(2) ytitle("TTF Natural Gas Price (EUR/MWh)",size(*1.2) axis(2)) ylabel(,labsize(*1.2) axis(2)) lcolor(black) lwidth(thick) title("C)", size(*1.4) position(11)) xtitle("") xlabel(13 "April 1 2021" 26 "July 1 2021" 44 "November 1 2021",labsize(*1.1)) || line at_pr_wkm  dk1_wkm lt_pr_wkm no_pr_wkm wk, lwidth(thin) yaxis(1) ytitle( "Wholesale Electricity Price (EUR/MWh)",size(*1.3)) xlabel(#4) lcolor(bluishgray ...) || line avg_wholesale_wk wk, yaxis(1) lcolor(red) lwidth(thick) xlabel(13 "April 1 2021" 26 "July 1 2021" 35 "September 1 2021" 44 "November 1 2021")  legend(position(6) size(*1.15) order( 1 24 25) rows(2)  label (1  "Individiual Country Wholesale Price") label(2 "Natural Gas Price") label(3 ("Average Wholesale Electricity Price"))) 
 
 
 *Norway, and Denmark weighted average (by load) over their TSOs
@@ -34,188 +34,128 @@ twoway line cz_pr_wkm be_pr_wkm it_pun_wkm es_pr_wkm delu_wkm fi_pr_wkm pt_pr_wk
 
 
 
-** Generate new thresholds of maximum prices for Panel B **
-
-foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL"  "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
-
-use `y'_new,clear
-cap drop N tot thresh_1 thresh_2 thresh_3 thresh_4
-cap gen N=_n
-cap egen tot=max(N)
-*if prices above a certain threshold
-cap gen thresh_1= 1 if wholesale_test>=200
-replace thresh_1=0 if wholesale_test<200
-cap gen thresh_2= 1 if wholesale_test>=250
-replace thresh_2=0 if wholesale_test<250
-cap gen  thresh_3= 1 if wholesale_test>=300
-replace thresh_3= 0 if wholesale_test<300
-cap gen thresh_4=1 if wholesale_test>=350
-replace thresh_4=0 if wholesale_test<350
 
 
 
-cap drop t1 t2 t3 t4
-*count how many times over each threshold
-egen t1=sum(thresh_1)
-egen t2=sum(thresh_2)
-egen t3=sum(thresh_3)
-egen t4=sum(thresh_4)
+**New panel D
+*Triangles added manually in powerpoint according to data from historic wholesale (found in historic.dta or the means in allcountries_*), for mean value from January 2016-April 2021
+grstyle clear
+grstyle init
+grstyle set legend 9
+*manually add the rest of the X for historic wholesale prices
+graph box north_h DK_pr ee_pr fi_pr lt_pr nl_pr no_pr central_h at_pr be_pr cz_pr fr_pr de_pr ch_pr east_h bg_pr hu_pr pl_pr ro_pr rs_pr sk_pr south_h hr_pr gr_pr it_pun pt_pr si_pr es_pr avg_h avg_wholesale2, nooutsides horizontal name(nowbox,replace) note("") legend(size(*1.08))  b1title("April 2021-October 2021 Wholesale Electricity Price (EUR/MWh)",size(*1.08)) intensity(75) lintensity(75) ylabel(,labsize(*1.3)) box(16, color(gs5) lcolor(black*0.7)) box(17, color(sienna) lcolor(black*0.7))  box(18, color(navy) lcolor(black*0.7)) box(19, color(sand*1.2) lcolor(black*0.7)) box(20, color(dkorange*1.2) lcolor(black*0.7)) box(21, color(olive_teal*1.2) lcolor(black*0.7)) box(22, color(lavender) lcolor(black*0.7))  box(23, color(maroon) lcolor(black*0.7)) box(24, color(emerald) lcolor(black*0.7))  yscale(range(0 200)) box(24, color(emerald) lcolor(black*0.7)) box(25, color(magenta*0.6) lcolor(black*0.7)) box(26,color(gold*0.7) lcolor(black*0.7)) box(27,color(dkorange) lcolor(black*0.7)) box(28, color(purple) lcolor(black*0.7))  box(30, color(blue*0.4) lcolor(black*0.7)) title("D)",position(11) size(*1.4)) yscale(titlegap(medium))
 
 
-cap drop tp_1 tp_2 tp_3 tp_4
-cap gen tp_1 = t1/tot
-cap gen tp_2 = t2/tot
-cap gen tp_3=t3/tot
-cap gen tp_4=t4/tot
-}
 
-*Create excel spreadhseet with all country values for this
-putexcel set thresh_max, replace
+**New panel A
+
+**get the data
+use RE_spag
+
+ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
+//egen `y'_capacity2=mean(`y'_decarb),by(yr)
+gen `y'cap2016=`y'_capacity2 if yr==2016
+gen `y'cap2021=`y'_capacity2 if yr==2021
+ }
+
+ putexcel set decarbs_t, replace
 
 putexcel A1 = "Country"
-putexcel B1="tp_1"
-putexcel C1="tp_2"
-putexcel D1="tp_3"
-putexcel E1="tp_4"
+putexcel B1= "decarb_2016"
+putexcel C1= "decarb_2021"
+//putexcel D1= "decarb_all"
+//putexcel E1= "decarb_sample"
 
 local myrow = 2
+foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Tennet" "DE_Amprion" "DE_TransnetBW"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO_1" "NO_2" "NO_3" "NO_4" "PL" "PT" "RO" "RS" "SI" "SK"  {
 
-foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" " NO" "PL" "PT" "RO" "RS" "SI" "SK" {
-	
-	use `y'_new,clear
-	
 	putexcel A`myrow' = "`y'"
-	tabstat tp_1, save
+	tabstat `y'cap2016, save
 	putexcel B`myrow' = matrix(r(StatTotal))
-	tabstat tp_2, save
+	tabstat `y'cap2021, save	
 	putexcel C`myrow' = matrix(r(StatTotal))
-	tabstat tp_3, save
-	putexcel D`myrow' = matrix(r(StatTotal))
-	tabstat tp_4, save
-	putexcel E`myrow' = matrix(r(StatTotal))
+// 	tabstat decarb , save
+// 	putexcel D`myrow' = matrix(r(StatTotal))
+// 	tabstat decarb if yr==2021 & month>4, save
+// 	putexcel E`myrow' = matrix(r(StatTotal))
 	
+
 	local myrow = `myrow' + 1
 
-	 }
+}
 
-*make it percent
-cap drop tp_1_p tp_2_p tp_3_p tp_4_p
-cap gen tp_1_p = tp_1*100
-cap gen tp_2_p = tp_2*100
-cap gen tp_3_p = tp_3*100
-cap gen tp_4_p = tp_4*100
+**save as deca.dta
 
+*Used to make the figure
+use deca
 
-cap label var tp_1_p "Wholesale Price > 200 Euros"
-cap label var tp_2_p "Wholesale Price > 250 Euros"
-cap label var tp_3_p "Wholesale Price > 300 Euros"
-cap label var tp_4_p "Wholesale Price > 350 Euros"
-
-*** Panel B generation ***
-
-*Import it into Fig1_b
-use Fig1_b,clear
-
-*Legend on bottom
 grstyle clear
 grstyle init
 grstyle set legend 6
 
-**manually label n8 for regions of country groupings in editor 
-*use n8 as the manual sorting order 
-labmask n8,values(country)
-twoway bar tp_1_p tp_2_p tp_3_p tp_4_p n9,horizontal fintensity(30 50 70 90) fcolor(maroon ..) ylabel(0(0.1)1) ylabel(1(1)28,valuelabel labsize(vsmall) angle(horizontal)) ysc(r(0 1)) ytitle("") xtitle("Percent of Total Hours",size(*1.25)) title("B)",position(11) size(*1.4)) name(c_grad,replace) legend(size(*1.2) rows(2) margin(zero)) xlabel(,labsize(*1.2))
+cap drop region
+gen region=""
+replace region="North" if labels=="Denmark" | labels=="Estonia" | labels=="Finland" | labels=="Lithuania" | labels=="Netherlands" | labels=="Norway" 
+replace region="Central" if labels=="Austria" | labels=="Belgium" | labels=="Czech" | labels=="France" | labels=="Germany" | labels=="Switzerland "  
+replace region="Eastern" if labels=="Bulgaria" | labels=="Hungary" | labels=="Poland" | labels=="Romania" | labels=="Serbia"  | labels=="Slovakia"  
+replace region="Southern" if labels=="Croatia" | labels=="Greece" | labels=="Italy" | labels=="Portugal" | labels=="Slovenia" | labels=="Spain"
 
-//graph combine b1 historicbox c_grad nowbox , name(c1,replace) altshrink
+set obs `=_N+1'
+replace labels="A" if labels==""
+set obs `=_N+1'
+replace labels="B" if labels==""
+set obs `=_N+1'
+replace labels="C" if labels==""
+set obs `=_N+1'
+replace labels="D" if labels==""
+ 
 
-*** PANEL C generation ****
-use wholesale_both,clear
+ 
+cap drop order
+gen order=0
+replace order = 1 if labels=="Denmark"
+replace order = 2 if labels=="Estonia"
+replace order = 3 if labels=="Finland"
+replace order = 4 if labels=="Lithuania"
+replace order = 5 if labels=="Netherlands"
+replace order = 6 if labels=="Norway"
+replace order = 7 if labels=="A"
+replace order = 8 if labels=="Austria"
+replace order = 9 if labels=="Belgium"
+replace order = 10 if labels=="Czech"
+replace order = 11 if labels=="France"
+replace order = 12 if labels=="Germany"
+replace order = 13 if labels=="Switzerland"
+replace order = 14 if labels=="B"
+replace order = 15 if labels=="Bulgaria"
+replace order = 16 if labels=="Hungary"
+replace order = 17 if labels=="Poland"
+replace order = 18 if labels=="Romania"
+replace order = 19 if labels=="Serbia"
+replace order = 20 if labels=="Slovakia"
+replace order = 21 if labels=="C"
+replace order = 22 if labels=="Croatia"
+replace order = 23 if labels=="Greece"
+replace order = 24 if labels=="Italy"
+replace order = 25 if labels=="Portugal"
+replace order = 26 if labels=="Slovenia"
+replace order = 27 if labels=="Spain"
+replace order = 28 if labels=="D"
+replace order = 29 if labels=="Average"
 
+ 
+sort order 
+*groupings by geography, 2 dots per line
+ 
+ //graph hbar decarb_2021 decarb_2016,over(labels,sort(order) label(labsize(*0.92)))  graphregion(margin(l+18)) title("A)", position(11) size(*1.4)) legend(label(1 "Decarbonized Energy Share 2021") label(2 "Decarbonized Energy Share 2016") size(small) rows(1)) 
+ 
+ **this one
+ graph dot decarb_2021 decarb_2016,over(labels,sort(order) label(labsize(*0.92))) marker(1,msymbol(d) mcolor(maroon*0.7) msize(*1.8)) marker(2,mcolor(ebblue*0.8) msize(*2))  graphregion(margin(l+18)) title("A)", position(11) size(*1.35)) legend(label(1 "Decarbonized Energy Share 2021") label(2 "Decarbonized Energy Share 2016") size(small) rows(1)) 
 
-*****labels
-label var at_pr "Austria: April 2021-November 2021"
-label var be_pr "Belgium: April 2021-November 2021"
-label var bg_pr "Bulgaria: April 2021-November 2021"
-label var ch_pr "Switzerland: April 2021-November 2021"
-label var cz_pr "Czech: April 2021-November 2021"
-label var de_pr "Germany: April 2021-November 2021"
-label var dk_avg "Denmark: April 2021-November 2021"
-label var ee_pr "Estonia: April 2021-November 2021"
-label var es_pr "Spain: April 2021-November 2021"
-label var fi_pr "Finland: April 2021-November 2021"
-label var fr_pr "France: April 2021-November 2021"
-label var hr_pr "Croatia: April 2021-November 2021"
-label var hu_pr "Hungary: April 2021-November 2021"
-label var it_pun "Italy: April 2021-November 2021"
-label var nl_pr "Netherlands: April 2021-November 2021"
-label var lt_pr "Lithuania: April 2021-November 2021"
-label var no_pr "Norway: April 2021-November 2021"
-label var pl_pr "Poland: April 2021-November 2021"
-label var pt_pr "Portugal: April 2021-November 2021"
-label var ro_pr "Romania: April 2021-November 2021"
-label var rs_pr "Serbia: April 2021-November 2021"
-label var si_pr "Slovenia: April 2021-November 2021"
-label var sk_pr "Slovakia: April 2021-November 2021"
-
-
-
-label var AT_h "Austria"
-label var BE_h "Belgium"
-label var BG_h "Bulgaria"
-label var CH_h "Switzerland"
-label var CZ_h "Czech"
-label var DE_h "Germany"
-label var DK_h "Denmark"
-label var EE_h "Estonia"
-label var ES_h "Spain"
-label var FI_h "Finland"
-label var FR_h "France"
-label var GR_h "Greece"
-label var HR_h "Croatia"
-label var HU_h "Hungary"
-label var IT_h "Italy"
-label var LT_h "Lithuania"
-label var NL_h "Netherlands"
-label var NO_h "Norway"
-label var PL_h "Poland"
-label var PT_h "Portugal"
-label var RO_h "Romania"
-label var RS_h "Serbia"
-label var SI_h "Slovenia"
-label var SK_h "Slovakia"
-label var north_h "Northern Countries"
-label var south_h "Southern Countries"
-label var east_h "Eastern Countries"
-label var central_h "Central Countries"
-
-
-
-
-
-
-
-*saved as h1b and the other one, changed the legends manually and colors
-*make legend on the right, inside the figure 
-grstyle clear
-grstyle init
-grstyle set legend 3,inside
-**Upper panel for historic prices 
- graph box north_h  DK_h  EE_h FI_h LT_h NL_h NO_h central_h AT_h BE_h CZ_h FR_h DE_h CH_h east_h BG_h HU_h PL_h RO_h RS_h SK_h south_h HR_h GR_h IT_h PT_h SI_h ES_h, horizontal nooutsides name(historicbox,replace) note("") b1title("Historic Wholesale Price (EUR/MWh)",size(*1.1)) intensity(75) lintensity(75) legend(size(*1.15)) ylabel(,labsize(*1.5)) yscale(titlegap(medium)) box(16, color(gs5)) box(17, color(sienna))  box(18, color(navy)) box(19, color(sand*1.2)) box(20, color(dkorange*1.2)) box(21, color(olive_teal*1.2)) box(22, color(lavender))  box(23, color(maroon)) box(24, color(emerald)) box(25, color(magenta*0.6)) box(26,color(gold*0.7)) box(27,color(dkorange)) box(28, color(purple))
- *Lower panel for sample prices 
-graph box north_h dk1 ee_pr fi_pr lt_pr nl_pr no_pr central_h at_pr be_pr cz_pr fr_pr de_pr ch_pr east_h bg_pr hu_pr pl_pr ro_pr rs_pr sk_pr south_h hr_pr gr_pr it_pun pt_pr si_pr es_pr, nooutsides horizontal name(nowbox,replace) note("") legend(off) b1title("April 2021-November 2021 Wholesale Price (EUR/MWh)",size(*1.1)) intensity(75) lintensity(75) ylabel(,labsize(*1.5)) box(16, color(gs5)) box(17, color(sienna))  box(18, color(navy)) box(19, color(sand*1.2)) box(20, color(dkorange*1.2)) box(21, color(olive_teal*1.2)) box(22, color(lavender))  box(23, color(maroon)) box(24, color(emerald)) yscale(range(0 200)) box(24, color(emerald)) box(25, color(magenta*0.6)) box(26,color(gold*0.7)) box(27,color(dkorange)) box(28, color(purple))
-
-** Panel C -- individual graphs are saved as how they are named
-graph combine historicbox nowbox, altshrink rows(2) xcommon title("C)",position(11)) imargin(zero) name(fig1_pc,replace)
-
-***this combine for panels
-*Panel a and b
-graph combine b1 c_grad, altshrink name(rf,replace)  rows(2)
-*panel c (init gr legend if did a or b last )
-grstyle clear
-grstyle init
-grstyle set legend 3,inside
-*** Combine all 3 panels
-graph combine rf fig1_pc, altshrink
+ 
+ 
+ 
+//twoway connected AT_capacity2-SK_capacity2 yr, lcolor(ltblue*0.7 green*0.7  cranberry*0.7  emidblue cyan*0.7 dknavy*0.7  gold*0.5  erose*0.7  orange*0.7  purple*0.7  mint*0.7  lavender orange_red*0.7  midblue*0.7  sand*0.7 erose*0.7  magenta red*0.7  dkorange sienna*0.7 ) mcolor(ltblue*0.7 green*0.7  cranberry*0.7  emidblue cyan*0.7 dknavy*0.7  gold*0.5  erose*0.7  orange*0.7  purple*0.7  mint*0.7  lavender orange_red*0.7  midblue*0.7  sand*0.7 erose*0.7  magenta red*0.7  dkorange sienna*0.7  ) ytitle("Decarbonized energy generation share",size(*1.15)) xtitle("") title("A)", size(*1.2) position(11))
 
 
 
@@ -226,26 +166,76 @@ graph combine rf fig1_pc, altshrink
 
 
 
+	
+	
 
 
 
 
 
 
+**New Panel B
+
+
+use "/Users/ZMarmarelis/Documents/GitHub/Nature_Energy_Crisis/Datasets/Combined datasets/allcountries_genshares.dta"
+//use allcountries_genshares.dta,clear
+drop region
+gen region=""
+replace region="North" if labels=="Denmark" | labels=="Estonia" | labels=="Finland" | labels=="Lithuania" | labels=="Netherlands" | labels=="Norway" 
+replace region="Central" if labels=="Austria" | labels=="Belgium" | labels=="Czech" | labels=="France" | labels=="Germany" | labels=="Switzerland "  
+replace region="Eastern" if labels=="Bulgaria" | labels=="Hungary" | labels=="Poland" | labels=="Romania" | labels=="Serbia"  | labels=="Slovakia"  
+replace region="Southern" if labels=="Croatia" | labels=="Greece" | labels=="Italy" | labels=="Portugal" | labels=="Slovenia" | labels=="Spain"
+
+set obs `=_N+1'
+replace labels="A" if labels==""
+set obs `=_N+1'
+replace labels="B" if labels==""
+set obs `=_N+1'
+replace labels="C" if labels==""
+ 
+
+cap drop order
+gen order=0
+replace order = 1 if labels=="Denmark"
+replace order = 2 if labels=="Estonia"
+replace order = 3 if labels=="Finland"
+replace order = 4 if labels=="Lithuania"
+replace order = 5 if labels=="Netherlands"
+replace order = 6 if labels=="Norway"
+replace order = 7 if labels=="A"
+replace order = 8 if labels=="Austria"
+replace order = 9 if labels=="Belgium"
+replace order = 10 if labels=="Czech"
+replace order = 11 if labels=="France"
+replace order = 12 if labels=="Germany"
+replace order = 13 if labels=="Switzerland "
+replace order = 14 if labels=="B"
+replace order = 15 if labels=="Bulgaria"
+replace order = 16 if labels=="Hungary"
+replace order = 17 if labels=="Poland"
+replace order = 18 if labels=="Romania"
+replace order = 19 if labels=="Serbia"
+replace order = 20 if labels=="Slovakia"
+replace order = 21 if labels=="C"
+replace order = 22 if labels=="Croatia"
+replace order = 23 if labels=="Greece"
+replace order = 24 if labels=="Italy"
+replace order = 25 if labels=="Portugal"
+replace order = 26 if labels=="Slovenia"
+replace order = 27 if labels=="Spain"
+ 
+sort order 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+graph hbar Solar Wind Hydro_R HydroDispatch Nuc, over(labels, label(labsize(*0.85)) ///
+		relabel(1 " " 2 "Austria" 3 " " 4 "Belgium" 5 "Bulgaria" 6 " " 7 "Croatia" 8 "Czech" 9 "Denmark" 10 "Estonia" 11 "Finland" ///
+		12 "France" 13 "Germany" 14 "Greece" 15 "Hungary" 16 "Italy" 17 "Lithuania" 18 "Netherlands" 19 "Norway" 20 "Poland" 21 "Portugal" 22 "Romania" 23 "Serbia" 24 "Slovakia" 25 "Slovenia" 26 "Spain" 27 "Switzerland" 28 "") ///
+		sort(order))  ysize(6) xsize(8) ///
+		stack ytitle("Share of generation mix (April 2021-October 2021)") ///
+		bar(1, color(orange*0.6)) bar(2, color(midgreen*0.6)) bar(3, color(red*0.6)) ///
+		bar(4, color(midblue*0.6)) bar(5, color(sienna*0.5)) bar(6, color(dknavy*0.6)) title("B)",size(*1.2) position(11)) ylabel(,labsize(*1)) ///
+		legend(label(1 "Solar") label(2 "Wind") label(3 "Hydro-run") label(4 "Hydro-dispatch") label(5 "Nuclear") size(small) position(6) rows(2)) graphregion(margin(l+18))
 
 
 

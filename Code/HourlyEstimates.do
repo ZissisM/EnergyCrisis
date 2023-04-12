@@ -72,13 +72,14 @@ replace hour_group = 3 if hour>16
 
 **Calculate vulnerability metrics
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK"  {
-	cap drop Hour_PT_`y' `y'_t Intensity_PT_`y'Hours_PT_`y'_1 Hours_PT_`y'_2 Hours_PT_`y'_3 Intensity_PT_`y'_1 Intensity_PT_`y'_2 Intensity_PT_`y'_3 elec_`y' elec_`y'_1 elec_`y'_2 elec_`y'_3
+	cap drop Hours_PT_`y' `y'_t 
+	cap drop Intensity_PT_`y' Hours_PT_`y'_1 Hours_PT_`y'_2 Hours_PT_`y'_3 Intensity_PT_`y'_1 Intensity_PT_`y'_2 Intensity_PT_`y'_3 elec_`y' elec_`y'_1 elec_`y'_2 elec_`y'_3
 	**t-stat
 	cap gen `y'_t = `y'/`y'_std
 
 	**Measure hours of pass-through & intensity
-	cap egen Hours_PT_`y' = total(`y'_t>1.96)
-	cap egen Intensity_PT_`y' = sum(`y') if `y'_t>1.96
+	cap egen Hours_PT_`y' = total(`y'_t>1.96 & `y'>0)
+	cap egen Intensity_PT_`y' = sum(`y') if `y'_t>1.96 & `y'>0
 
 	**By-hour-groups
 	cap egen Hours_PT_`y'_1 = total(`y'_t>1.96) if hour_group==1
@@ -99,10 +100,10 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "
  	gen elec_`y'_3= (68.3 * Intensity_PT_`y'_3)/7 
 
 	//April to September price difference = 44.01 : _noOct
-	// 	cap gen elec_`y'= (44.01 * Intensity_PT_`y')/24
-	// 	gen elec_`y'_1= (44.01 * Intensity_PT_`y'_1)/ 10
-	// 	gen elec_`y'_2= (44.01 * Intensity_PT_`y'_2)/7 
-	// 	gen elec_`y'_3= (44.01 * Intensity_PT_`y'_3)/7 
+// 		cap gen elec_`y'= (44.01 * Intensity_PT_`y')/24
+// 		gen elec_`y'_1= (44.01 * Intensity_PT_`y'_1)/ 10
+// 		gen elec_`y'_2= (44.01 * Intensity_PT_`y'_2)/7 
+// 		gen elec_`y'_3= (44.01 * Intensity_PT_`y'_3)/7 
 
 	//May to October price difference = 63.53:  _noApril
 	// 	cap gen elec_`y'= (63.53 * Intensity_PT_`y')/24
@@ -168,7 +169,6 @@ replace Intensity = 0 if Intensity==.
 replace Intensity_1 = 0 if Intensity_1==.
 replace Intensity_2 = 0 if Intensity_2==.
 replace Intensity_3 = 0 if Intensity_3==.
-replace Hourts_PT = 0 if Hourts_PT==.
 
 save elec_ps,replace
 
@@ -177,7 +177,8 @@ use allcountries_genshares
 drop Intensity_1 Intensity Intensity_2 Intensity_3 Hours_PT
 merge m:1 Country using elec_ps
 drop _merge
-save allcountries_genshares, replace
+*save to appropriate file depending on specification
+save allcountries_, replace
 
 
 

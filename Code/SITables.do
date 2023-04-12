@@ -34,6 +34,7 @@ foreach x in "AT" "FR" "IT" "PL" "PT" {
 
 
 ***SI Table 2, each country a separate doc file 
+*GR has no month fixed effects
 foreach x in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
 	//foreach x in "AT" {
 	use `x'_new,clear
@@ -183,7 +184,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "HR" "HU" "I
 
 
 
-***Data for Table EDF 2 for Pass-Through  Results for all Countries across Hours (reflected in Figure panels A,C,D,E,F)
+***Data for Table EDF 2 for Pass-Through  Results for all Countries across Hours (reflected in Figure 4 panels A,C,D,E,F)
 
 putexcel set Table3, replace
 
@@ -323,3 +324,11 @@ test Solar Wind Nuc Coal Gas HydroDispatch
 outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
 
 *Output table but it is edited manually
+
+
+
+
+
+**Multivariate EDF 6
+
+reg absV Gas Solar Wind Hydro_R Nuc Coal HydroDispatch

@@ -1,0 +1,24 @@
+		(1)	(2)
+VARIABLES	LABELS	Absolute Vulnerability	Relative Vulnerability
+			
+Solar	Solar	176.53	90.94
+		(131.831)	(95.018)
+Wind	Wind	48.34	79.24
+		(51.416)	(46.117)
+Hydro_R	Hydro_R	66.49*	48.49*
+		(33.057)	(23.179)
+Nuc	Nuclear	30.68	38.10
+		(29.564)	(22.038)
+Coal	Coal	30.31	24.19
+		(24.343)	(18.933)
+Gas	Gas	185.22***	147.81***
+		(30.130)	(21.335)
+HydroDispatch	Hydro Dispatch	25.15	22.56
+		(22.019)	(16.379)
+			
+Observations		24	24
+Adjusted R-squared		0.527	0.411
+F-test		9.786	9.810
+Prob>F		9.26e-05	9.13e-05
+Robust standard errors in parentheses			
+*** p<0.01, ** p<0.05, * p<0.1			
