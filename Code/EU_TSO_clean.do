@@ -1,4 +1,4 @@
-***2022 Initial Cleaning
+*** Initial Cleaning of hourly energy generation by source for all countries 
 *Not meant to run again, just displaying process
 
 
@@ -74,10 +74,11 @@ reshape wide gen_, i(t) j(type) string
 
 ***Merging different datasets to forumlate country specific datasets
 ***Merge wholesale prices into the dataset where wholesale_2021 has wholesale prices and EU_imports_3 has the aggregated imports into each country
-*Change dk1 to any country to import to maek each country dataset
+*Change dk1 to any country to import to make each country dataset, wholesale_2021 has all countries wholesale price data
 // merge 1:1 t using wholesale_2021, keepusing(dk1)
 // keep if _merge==3
 // drop _merge
+**Imports are not actually used
 // merge 1:1 t using EU_imports_3, keepusing(type_generation_timeDK)
 // keep if _merge==3
 // drop _merge
@@ -94,7 +95,7 @@ gen gen_Hydro_total = gen_Hydro_reservoir + gen_Hydro_run + gen_Hydro_storage
 label var gen_Hydro_total "Sum of Hydro sources"
 gen dow = dow(mdy(month,day,yr))
 label var dow "Day of week: 0-Sunday.. 6-Saturday"
-gen ln_wholesale = ln(wholesale)
+gen ln_wholesale = ln(wholesale_test)
 
 
 
@@ -104,7 +105,7 @@ egen country_total = rowtotal(gen_*)
 replace country_total = country_total - gen_Hydro_total + Imports
 label var country_total "Total generation + Imports"
 
-**Create initial shares using total generation (with imports) as the denominator-- edited later
+**Create initial shares using total generation (with imports) as the denominator-- edited later to not include imports
 *Need to edit this line for every country depending on what sources they have-- but these are the options
 
 capture{
@@ -122,40 +123,41 @@ gen Other_share = (gen_Waste+gen_Other)/country_total
 
 
 ****Initial charts of energy mix description of countries
- graph pie RE_share-Other_share, by(yr) plabel(1 percent, color(white)) plabel(2 percent, color(white)) plabel(3 percent, color(white)) title("Energy mix: Austria") sort descending
- graph pie  Nuc_share-RE_share Oil_share-Other_share, by(yr) plabel(1 percent, color(white)) plabel(2 percent, color(white)) plabel(3 percent, color(white)) plabel(4 percent, color(white)) title("Energy mix: ") sort descending 
+// graph pie RE_share-Other_share, by(yr) plabel(1 percent, color(white)) plabel(2 percent, color(white)) plabel(3 percent, color(white)) title("Energy mix: Austria") sort descending
+// graph pie  Nuc_share-RE_share Oil_share-Other_share, by(yr) plabel(1 percent, color(white)) plabel(2 percent, color(white)) plabel(3 percent, color(white)) plabel(4 percent, color(white)) title("Energy mix: ") sort descending 
 
 *check missing patterns of generations sources and wholesale price
 mvpatterns gen_Biomass-gen_Wind_onshore wholesale
 
 
 **Initial exploratory regressions
-reg wholesale lgas_p RE_share Gas_share c.ln_gas_p#c.Gas_share c.ln_gas_p#c.RE_share i.month#i.dow i.hour#i.dow i.yr, cluster(dt)
+reg wholesale_test lgas_p RE_share Gas_share c.ln_gas_p#c.Gas_share c.ln_gas_p#c.RE_share i.month#i.dow i.hour#i.dow i.yr, cluster(dt)
 outreg2 using j25GEN.doc, append label keep(ln_gas_p c.ln_gas_p#c.Gas_share c.ln_gas_p#c.RE_share RE_share Gas_share) nocons ctitle("Poland") title("Pass-through coefficents") addnote("Duration: Jan 2020-Nov 2021; Time effects: Month * Day of week, Hour * Day of week, Year; Errors clustered on Day")
 
 
-reg wholesale gas_p i.month#i.dow i.hour#i.dow i.yr, cluster(dt)
+reg wholesale_test gas_p i.month#i.dow i.hour#i.dow i.yr, cluster(dt)
 outreg2 using j255.doc, append label keep(ln_gas_p) nocons ctitle("Greece") title("Pass-through coefficents") addnote("Duration: Jan 2020-Nov 2021; Time effects: Month * Day of week, Hour * Day of week, Year; Errors clustered on Day")
 
-reg wholesale gas_p c.gas_p#i.hour i.month#i.dow i.hour#i.dow i.yr, cluster(dt)
+reg wholesale_test gas_p c.gas_p#i.hour i.month#i.dow i.hour#i.dow i.yr, cluster(dt)
 eststo: margins, dydx(ln_gas_p) at(hour=(0(1)23)) vsquish post
 esttab using jan272.rtf, append label compress onecell
 
 
-** Convert coal price from $/tonne to EUR/MWh
+** Convert coal price from $/tonne to EUR/MWh (Not actually used)
 replace coal_p = coal_p * 0.85/8.14
 drop ln_coal_p
 gen ln_coal_p = ln(coal_p)
 
 
 **** Truncate dataset to April 2021-November 2021 and more exploratory analysis
+*redoShares.do changes these shares to be the correct denominator (total domestic generation)
 
 *input country dataset _2020
 use _2020
 keep if yr==2021 & month >= 4
 gen wk = week(dt) //week variable
 save _2021
-reg wholesale gas_p c.gas_p#i.hour i.month#i.dow i.hour#i.dow, cluster(dt)
+reg wholesale_test gas_p c.gas_p#i.hour i.month#i.dow i.hour#i.dow, cluster(dt)
 eststo: margins, dydx(ln_gas_p) at(hour=(0(1)23)) vsquish post
 
 *labeling shares
@@ -193,7 +195,7 @@ hist Gas_share if month>=4, by(hour) percent title("Portugal at hour:")
 keep if yr==2021 & month >= 4
 save _2021
 
-*change shares
+*change shares, RE_share will vary by country 
 replace RE_share =  (gen_Hydro_run + gen_Wind_onshore + gen_Solar + gen_Wind_offshore + gen_Other_renewable)/country_total
 gen Hydro_dispatch = gen_Hydro_reservoir+gen_Hydro_storage
 gen Hydro_share_Dispatch = (Hydro_dispatch)/country_total
@@ -520,9 +522,10 @@ if c(rc)== 111 {
 
 
 
-***Clean price data for before April 2021
+***Clean price data for before April 2021 (Historical prices for Figure 1)
 
 
+*Obtain them using excel 
 putexcel set Historical_prices, replace
 
 putexcel A1 = "Country"

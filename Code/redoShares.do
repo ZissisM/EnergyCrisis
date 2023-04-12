@@ -1,15 +1,16 @@
 *File for calculating generation shares and means for every country 
-*Updating allcountries datasets with new generations hares 
+*Updating allcountries datasets with new generation shares 
 
 
 
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL"  "PL" "PT" "RO" "RS" "SI" "SK"  {
+	*Subset TSOs dealt with differently
 	//foreach y in	 "DE_50Hz" "DE_Amprion" "DE_TransnetBW" "DE_Tennet" "NO_1" "NO_2" "NO_3" "NO_4"{
 
 	use `y'_new
 
 	cap drop totalgen 
-	*Can previously calculated the country_total including Imports
+	* Can use the previously calculated that country_total included Imports, subtract for each country
 	cap gen totalgen= country_total-Imports
 
 	*Initialize to keep consistency across countries 
@@ -58,29 +59,25 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "I
 	cap gen Others_share_l = Biomass_share_l+Oil_share_l +Waste_share_l+Other_share_l
 
 
-	*By total generation
-	gen solar_s = (solar_share_l*load)/(country_total*1000-Imports)
-	gen wind_s = (wind_share_l*load)/(country_total*1000-Imports)
-	gen Nuc_s = (Nuc_share_l*load)/(country_total*1000-Imports)
-	gen Coal_s = (Coal_share_l*load)/(country_total*1000-Imports)
-	gen Lignite_s = (Lignite_share_l*load)/(country_total*1000-Imports)
-	gen Gas_s = (Gas_share_l*load)/(country_total*1000-Imports)
-	gen Hydro_s = (Hydro_share_l*load)/(country_total*1000-Imports)
+	***By total generation (Used for Figure 7)
 
-	cap drop coal_tg gas_tg nuc_tg hydro_tg others_tg re_tg
-	cap gen re_tg = 0 
+	//cap drop coal_tg gas_tg nuc_tg hydro_tg others_tg re_tg
+	//cap gen re_tg = 0 
 
-	cap replace bio_tg = gen_Biomass/totalgen
+	cap replace re_tg = (RE_gen*1000)/totalgen
+	cap replace hydror_tg = gen_Hydro_run/totalgen
 	cap replace oil_tg = gen_Oil/totalgen
 	cap replace other_tg = gen_Other/totalgen
 	cap replace waste_tg = gen_Waste/totalgen
-
+	cap replace bio_tg = gen_Biomass/totalgen
+	cap replace others_tg = (oil_tg+bio_tg+other_tg+waste_tg)
+	
 	*Deal with lignite and coal combined
 	cap replace gen_coal =  gen_Lignite
 	cap replace gen_coal =  gen_Hard_coal
 	cap replace gen_coal = gen_Hard_coal + gen_Lignite
 
-
+	
 	replace re_tg = RE_gen/totalgen
 	replace solar_s = gen_Solar/totalgen
 	replace wind_s= gen_Wind_onshore/totalgen
@@ -96,16 +93,10 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "I
 
 
 
-	***Update !***
-	cap replace re_tg = (RE_gen*1000)/totalgen
-	cap replace hydror_tg = gen_Hydro_run/totalgen
-	cap replace oil_tg = gen_Oil/totalgen
-	cap replace other_tg = gen_Other/totalgen
-	cap replace waste_tg = gen_Waste/totalgen
-	cap replace bio_tg = gen_Biomass/totalgen
-	cap replace others_tg = (oil_tg+bio_tg+other_tg+waste_tg)
+	
 
-	*By hour averages
+	**By hour averages
+	
 	cap drop Coal_tgm Gas_tgm Nuc_tgm Hydro_tgm others_tgm re_tgm solar_tgm wind_tgm hydror_tgm
 	cap drop re_tgm
 	cap egen Coal_tgm=mean(Coal_s),by(hour)
@@ -125,23 +116,16 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "I
 	label var others_tgm "Other"
 	label var re_tgm "Intermittent Renewable"
 
-	*Load= totalgen + Imports - Exports
-	drop Exports
-	cap gen Exports = totalgen+Imports-load
-	cap egen Imports_h = mean(Imports),by(hour)
-	cap egen Exports_h = mean(Exports),by(hour)
-	cap label var Imports_h "Imports"
-	cap label var Exports_h "Exports"
-
 
 	label var solar_tgm "Solar"
 	label var wind_tgm "Wind"
 	label var hydror_tgm "Hydro-run"
 	//label var re_tg "% Intermittent Renewable"
-	label var Gas_s "% Gas"
+	//label var Gas_s "% Gas"
 
 	
-	**Generation capacity factors, assuming that capacity=maximum value observed for each generation source
+	***Generation capacity factors, assuming that capacity=maximum value observed for each generation source
+	
 	cap gen others_gen = others_tg*totalgen
 	cap egen cap_others = max(others_gen)
 	cap drop capf_Others capf_Coal
@@ -152,7 +136,8 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "I
 	label var capf_Coals "Coal"
 	label var capf_Others "Other"
 
-	*Non-gas dispatchable capacity calculation
+	*Non-gas dispatchable capacity calculation (coal, hydro, others, nuclear)
+	
 	cap gen all_gen = Coal_s*totalgen+Hydro_s*totalgen+others_tg*totalgen+Nuc_s*totalgen
 	cap egen cap_all=max(all_gen)
 	cap drop cf_alls
@@ -171,6 +156,7 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "I
 
 
 ***Create dataset with new share calculations for the 6 types in Figure 7
+
 *Output to excel and then input again into new stata dataset (EXAMPLES BELOW)
 *Edit in Excel for Averaged DE and NO based on weighting by load per their TSOs
 
@@ -192,7 +178,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Amprion" "DE_TransnetBW" "DE
 
 	use `x'_new,clear
 	putexcel A`myrow' = "`x'"
-    tabstat Nuc_s, save
+        tabstat Nuc_s, save
 	putexcel B`myrow' = matrix(r(StatTotal))
 	tabstat wind_s , save
 	putexcel C`myrow' = matrix(r(StatTotal))
@@ -213,7 +199,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Amprion" "DE_TransnetBW" "DE
 }
 
 *No october for Solar/Wind/Nuc generation shares
-*Can edit for other shares
+*Can edit this template for other shares/restrictions
 
 putexcel set SharesNoOct, replace
 putexcel A1 = "Country"
@@ -228,7 +214,7 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Tennet" "DE_TransnetBW" "DE_
 	use `y'_new, clear   
 
 	putexcel A`myrow' = "`y'"
-    tabstat solar_s if month<10,save
+        tabstat solar_s if month<10,save
 	putexcel B`myrow' = matrix(r(StatTotal))
 	tabstat  wind_s if month<10,save
 	putexcel C`myrow' = matrix(r(StatTotal))
@@ -240,14 +226,17 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE_50Hz" "DE_Tennet" "DE_TransnetBW" "DE_
 }
 
 
-*Input into dataset with vulnerability metrics and updated generation shares
+***Input into dataset with vulnerability metrics and updated generation shares
+
 clear
 import excel SharesNoOct, sheet("Sheet1") firstrow
 save shares_noOct,replace
+//change which one to save it into 
 use allcountries_noOct
 drop Solar Wind Nuc
 merge m:1 Country using shares_noOct
 drop _merge
+//change where to save it
 save allcountries_noOct,replace
 
 
