@@ -6,8 +6,8 @@
 clear
 set scheme white_tableau
 
-* cd ~/Downloads/Nature_Energy_Crisis/Datasets/Country datasets
-*in country datasets
+ *cd ~/Downloads/Nature_Energy_Crisis/Datasets/Country datasets
+*in COUNTRY datasets
 
 
 **Loop over countries
