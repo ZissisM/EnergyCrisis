@@ -1,4 +1,4 @@
-# "Decarbonization and Electricity Price vulnerability]{Decarbonization strategies and electricity price vulnerability: lessons from the European Energy Crisis" Replication Package
+# "Decarbonization strategies and electricity price vulnerability: lessons from the European Energy Crisis" Replication Package
 ### Raúl Bajo, Antonio Bento, Daniel Kaffine, and Zissis Marmarelis
 
 #### The following repository contains all of the raw data and  curated datasets and code used to generate each figure and result in the paper "European Energy Crisis Electricity Price vulnerability and the consequences of the generation mix in the European Energy Crisis". The model output was generated in STATA. Any questions with the code or data please contact zmarmare@usc.edu
@@ -52,10 +52,10 @@
  
  * EU_TSO_clean.do: Used initially to clean the downloaded hourly generation data and reformat it appropriately. Uses *country* datasets.
  
- 
 
- * Entso-e Pandas Client was used to download the data. This can be found [here](https://github.com/EnergieID/entsoe-py).
+ * Entso-e Pandas Client was used to download the data. Example documentation can be found [here](https://github.com/EnergieID/entsoe-py).
+ * _1_a_enstoe_api_fn.py & _1_1b_enstoe_api_fn.py: Used for this purpose to collect the desired data for each country.
  
  
  [^1]: Running particular code may require the manual selection of the different dataset folders provided (i.e., Country, Combined, or Other). The directory required is on the top of each do-file.
- [^2]: The website tool [Datawrapper.de](https://datawrapper.dwcdn.net/B37ic/1/) was used for the construction of maps for the Figures with our estimated results. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 2).
+ [^2]: The website tool [Datawrapper.de](https://datawrapper.dwcdn.net/Wi1uA/1/) was used for the construction of maps for the Figures with our estimated results. Powerpoint was used for visual modification and merging of images to create certain figures (i.e., Figure 2).
