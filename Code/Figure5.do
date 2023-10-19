@@ -17,7 +17,10 @@ use `y'_new
 **Left panel hourly pass-through
 reg wholesale_test gas_p RE_gen c.load##c.load c.gas_p#i.hour i.month#i.hour i.dow#i.hour, cluster(dt)
 eststo: margins, dydx(gas_p) at(hour=(0(1)23)) vsquish post noestimcheck 
-coefplot, vertical recast(connected) msize(*1.3) lwidth(*1.2)  mlabel(cond(@pval<.01, "***", cond(@pval<.05, "**", ""))) xlabel(1 "0"  5 "4" 9 "8" 13 "12" 17 "16" 21 "20" 24 "23",labsize(*1.81) grid gmax gmin) mlabsize(large) xtitle("Hour of day",size(*1.81)) ytitle("Average Pass-through",size(*1.81)) title("",size(*0.92) position(11)) mcolor(%75) msymbol(d) mfcolor(white) levels(95) ciopts(recast(. rcap) color(*0.65)) yline(0, lwidth(*2.1)) yline(1, lwidth(*2.1)) xscale(range(1 24)) name(`y'levf4, replace) ylabel(,labsize(*1.81) grid gmax gmin)  grid(gmax gmin glpattern(dot) glcolor(gray) glwidth(*0.3))
+coefplot, vertical recast(connected) msize(*1.3) lwidth(*1.2)  mlabel(cond(@pval<.01, "***", cond(@pval<.05, "**", ""))) xlabel(1 "0"  5 "4" 9 "8" 13 "12" 17 "16" 21 "20" 24 "23",labsize(*1.81) grid gmax gmin) mlabsize(large) xtitle("Hour of day",size(*1.81)) ytitle("Average Pass-through",size(*1.81)) title("",size(*0.92) position(11)) mcolor(%75) msymbol(d) mfcolor(white) levels(95) ciopts(recast(. rcap) color(*0.65)) yline(0, lwidth(*2.1)) yline(1, lwidth(*2.1)) xscale(range(1 24)) name(name(`y'levf4, replace), replace) ylabel(,labsize(*1.81) grid gmax gmin)  grid(gmax gmin glpattern(dot) glcolor(gray) glwidth(*0.3))
+
+*Add PT_load FR_load FR_RE PT_RE  to above regression for robustness check in Spain on including neighbors controls:  PT_load PT_RE FR_RE FR_load
+
 
 **Right panel hourly share (with a denominator as total generation)
 twoway connected coal_tgm gas_tgm hydro_tgm nuc_tgm re_tgm others_tgm hour, xscale(range(1 24)) clcolor(sienna*0.7 midgreen*0.7 orange*0.6 red*0.7 midblue*0.6 dknavy*0.7) mcolor(sienna*0.6 midgreen*0.6 orange*0.5 red*0.6 midblue*0.5 dknavy*0.6) msymbol(D ..) xlabel(0 4 8 12 16 20 23) sort title("",size(*0.95) position(11)) xtitle("Hour of day",size(*1.81)) ytitle("Energy Share",size(*1.81))  name(`y'source2f4,replace) legend(off) xlabel(,labsize(*1.81))  ylabel(,labsize(*1.81))
@@ -59,7 +62,7 @@ grc1leg PLlevf4 PLsource2f4, altshrink legendfrom(PLsource2f4) name(PLg,replace)
 **Responsivness/slope plot for 5 countries --> Figure 5 last panel 
 *Panel F generation
 
-foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
+foreach y in "AT" "BE" "BG" "CH" "CZ" "DE" "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK" {
 //foreach y in "AT" "FR" "IT" "PL" "PT" {
 
 use `y'_new

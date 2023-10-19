@@ -248,9 +248,7 @@ graph hbar Solar Wind Hydro_R HydroDispatch Nuc, over(labels, label(labsize(*0.8
 
 
 
-
-
-
+		
 
 
 

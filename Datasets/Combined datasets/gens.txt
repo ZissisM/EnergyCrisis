@@ -1,0 +1,20 @@
+		(1)	(2)	(3)	(4)
+VARIABLES	LABELS	Gas share	Gas share	Gas share	Gas share
+					
+RE_CF	IRE CF	-0.200***	-0.307***	-0.326***	-0.535***
+		(0.0421)	(0.0671)	(0.0542)	(0.0214)
+load	Load	1.79e-05***	3.06e-05***	3.44e-05***	3.40e-05
+		(5.71e-06)	(8.07e-06)	(8.97e-06)	(1.96e-05)
+c.load#c.load		-1.79e-10**	-3.46e-10**	-4.08e-10**	-3.31e-10
+		(7.00e-11)	(1.17e-10)	(1.35e-10)	(2.89e-10)
+Constant	Constant	0.112***	0.135**	0.141**	0.200
+		(0.0313)	(0.0504)	(0.0614)	(0.204)
+					
+Observations		122,939	61,344	61,332	20,516
+R-squared		0.216	0.305	0.342	0.650
+Number of id		24	12	12	4
+Country FE		YES	YES	YES	YES
+Month-Hour FE		YES	YES	YES	YES
+Countries		All	IRE above median	Gas above median	Southern 4
+Robust standard errors in parentheses					
+*** p<0.01, ** p<0.05, * p<0.1					

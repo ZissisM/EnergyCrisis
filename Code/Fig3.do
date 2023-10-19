@@ -1,4 +1,5 @@
 *Used to generated Figure 3, creates 7 scatter plots and a table/figure(G)
+*only use the 4 scatter plots in main figure, the rest relegated to SI
 
 *use the allcountries_genshares in: 
 * cd ~/Downloads/Nature_Energy_Crisis/Datasets/Combined datasets
@@ -8,6 +9,9 @@
 use allcountries_genshares
 **Generate Fig 3
 
+
+
+***Do not use absolute vulnerability panels anymore (A B C)-- renamed to just vulnerability, which was relative vulnerability (the ones that we use in Fig 3). 
 
 **to adjust for DK and NL
 replace Solar = 0.038 in 7
@@ -22,7 +26,7 @@ replace solar_wind_hydror=Solar+Wind+Hydro_R
 *Decarbonized computation
 replace lowcarb = solar_wind_hydror+Nuc+HydroDispatch
 
-**Panel B
+**Panel B (SI now)
 
 *orientation of labels on plots
 replace m1=1 if Country=="DK"
@@ -59,7 +63,7 @@ twoway scatter absV solar_wind_hydror if exclude==0, mlabel(labels) mlabvpositio
 
 
 
-**Panel E
+**Panel E (now B)
 
 robreg mm Intensity solar_wind_hydror if exclude==0
 cap gen m2=9 if Country=="DK"
@@ -82,11 +86,11 @@ replace m2=5 if Country=="IT"
 robreg mm Intensity solar_wind_hydror if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
-twoway scatter Intensity solar_wind_hydror if exclude==0, mlabel(labels) mlabvposition(m2) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("E)",position(11) size(*1.4)) xtitle("IRE share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Relative Vulnerability (EUR/MWh),size(*1.47)) name(ri,replace) ||function y=_b[solar_wind_hydror]*x+_b[_cons],range(solar_wind_hydror) || lfit Intensity solar_wind_hydror if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity solar_wind_hydror if exclude==0, mlabel(labels) mlabvposition(m2) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("B)",position(11) size(*1.4)) xtitle("IRE share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(ri,replace) ||function y=_b[solar_wind_hydror]*x+_b[_cons],range(solar_wind_hydror) || lfit Intensity solar_wind_hydror if exclude==0, lcolor(ebblue*0.5)
 
 
 
-**Panel A
+**Panel A (SI now)
 
 replace m3=4 if Country=="PL"
 replace m3=9 if Country=="DK"
@@ -116,7 +120,7 @@ matrix b=e(b)
 twoway scatter absV lowcarb if exclude==0, mlabel(labels) mlabvposition(m3) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("A)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Absolute Vulnerability (EUR/MWh),size(*1.47)) name(ad,replace) ||function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit absV lowcarb if exclude==0, lcolor(ebblue*0.5)
 
 
-** Panel D
+** Panel D (now A)
 
 robreg mm Intensity lowcarb if exclude==0
 matrix b=e(b)
@@ -139,10 +143,10 @@ replace z7= 12 if Country=="BG"
 replace z7= 2 if Country=="BE"
 
 
-twoway scatter Intensity lowcarb if exclude==0, mlabel(labels) mlabvposition(z7) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*1.5) color(navy) graphregion(lstyle(none)) title("D)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.5)) ytitle(Relative Vulnerability (EUR/MWh),size(*1.47)) name(rd,replace) || function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit Intensity lowcarb if exclude==0, lcolor(ebblue*0.5) 
+twoway scatter Intensity lowcarb if exclude==0, mlabel(labels) mlabvposition(z7) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*1.5) color(navy) graphregion(lstyle(none)) title("A)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.5)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(rd,replace) || function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit Intensity lowcarb if exclude==0, lcolor(ebblue*0.5) 
 
 
-** Panel C
+** Panel C (SI now)
 robreg mm absV Gas if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
@@ -174,7 +178,7 @@ twoway scatter absV Gas if exclude==0, mlabel(labels) mlabvposition(m4) mlabsize
 
 
 
-**Panel F
+**Panel F (now C)
 robreg mm Intensity Gas if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
@@ -196,15 +200,16 @@ replace m1=4 if Country=="PT"
 
 
 
-twoway scatter Intensity Gas if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.27) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("F)",position(11) size(*1.4)) xtitle("Natural gas share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Relative Vulnerability (EUR/MWh),size(*1.47)) name(rg,replace) ||function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
+twoway scatter Intensity Gas if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.27) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("C)",position(11) size(*1.4)) xtitle("Natural gas share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(rg,replace) ||function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
 
 
 
 
 
 
-graph combine ad ai ag rd ri rg ,  name(aggreg2,replace) col(3) altshrink 
+*graph combine ad ai ag rd ri rg ,  name(aggreg2,replace) col(3) altshrink 
 
+graph combine rd ri rg ,  name(aggreg2,replace) col(3) altshrink 
 
 
 **panel G (Table/figure)
@@ -292,7 +297,7 @@ gen n=_n
 
 *drop RO because such low pass-through that it did not make sense to do this and was not meaningful
 labmask n,values(labels)
-twoway bar cap150 cap125 cap100 n,horizontal fintensity(30 60 90) fcolor(forest_green ..) ylabel(1(1)23,valuelabel labsize(*0.98) angle(horizontal)) ysc(r(0 1)) ytitle("") xtitle("Necessary Natural Gas Price Cap (EUR/MWh)",size(*1.25)) title("G)",position(11) size(*1.2)) name(fig6b,replace) legend(size(*0.95) rows(3) order( 3 2 1) ) xlabel(#10, labsize(*1.1)) xline(180)
+twoway bar cap150 cap125 cap100 n,horizontal fintensity(30 60 90) fcolor(forest_green ..) ylabel(1(1)23,valuelabel labsize(*0.98) angle(horizontal)) ysc(r(0 1)) ytitle("") xtitle("Necessary Natural Gas Price Cap (EUR/MWh)",size(*1.25)) title("D)",position(11) size(*1.2)) name(fig6b,replace) legend(size(*0.95) rows(3) order( 3 2 1) ) xlabel(#10, labsize(*1.1)) xline(180)
 
 
 
@@ -342,7 +347,7 @@ replace r2=6 if Country=="BG"
 robreg mm price180 lowcarb 
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
-twoway scatter price180 lowcarb, mlabel(Country) mlabvposition(r2) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("H)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.42)) ylabel(,labsize(*1.55) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.41)) ytitle(Max. Electricity Price under EU N.G. Price Cap (EUR/MWh),size(*1.2)) name(capg,replace) ||function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit price180 lowcarb, lcolor(ebblue*0.5)
+twoway scatter price180 lowcarb, mlabel(Country) mlabvposition(r2) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("E)",position(11) size(*1.4)) xtitle("Decarbonized energy share",size(*1.42)) ylabel(,labsize(*1.55) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.41)) ytitle(Max. Electricity Price under EU N.G. Price Cap (EUR/MWh),size(*1.2)) name(capg,replace) ||function y=_b[lowcarb]*x+_b[_cons],range(lowcarb) || lfit price180 lowcarb, lcolor(ebblue*0.5)
 
 
 
@@ -373,9 +378,23 @@ replace r1=6 if Country=="ES"
 replace r1=12 if Country=="CZ"
 
 
+**Panel E
 
 robreg mm price180 IRE 
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
 twoway scatter price180 IRE, mlabel(Country) mlabvposition(r1) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) xtitle("IRE share",size(*1.42)) ylabel(,labsize(*1.55) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.41)) ytitle(Max. Electricity Price under EU N.G. Price Cap (EUR/MWh),size(*1.23)) name(capg,replace) ||function y=_b[IRE]*x+_b[_cons],range(IRE) || lfit price180 IRE, lcolor(ebblue*0.5)
 
+
+
+
+
+
+***test
+replace m1=3 if Country=="FI"
+replace m1=7 if Country=="PT"
+
+robreg mm Intensity abs_sub if exclude==0
+matrix b=e(b)
+**both OLS and mm lines included, in addition to dots for each Country
+twoway scatter Intensity abs_sub if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*1.2) color(navy) graphregion(lstyle(none)) title("",position(11) size(*1)) xtitle("Abs(Substitution effect)",size(*1.2)) ylabel(,labsize(*1) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.2)) name(ai,replace) ||function y=_b[abs_sub]*x+_b[_cons],range(abs_sub) || lfit Intensity abs_sub if exclude==0, lcolor(ebblue*0.5)
