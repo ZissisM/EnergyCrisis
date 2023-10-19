@@ -9,7 +9,7 @@
 
  * *Combined datasets* include streamlined data of all countries aggregated. Namely, average generation shares and vulnerability estimates (relative vulnerability labeled Intensity) are shown in allcountries_ datasets. Vulnerability estimates (e.g., used for Figure 2,3 and similar SI Figures) are reflected in HourlyEst_ datasets, and each specification condition (such as excluding a certain month or predicting future vulnerability).  Allcountries_ datasets include the HourlyEst_ estimates in addition to corresponding generation shares.
  
- * *Other datasets* include datasets used to generate certain Figures, such as Figure 1 utilizing wholesale prices (i.e., wholesale_both with sample period and historic prices). Possible baseline (pre-crisis averages) prices for absolute vulnerability are also put together here for all countries.Raw data is also included here: hourly wholesale prices, daily gas prices (labeled newprices), while hourly raw energy generation and load data are too large and thus the link to these zip files is provided [here](https://drive.google.com/drive/folders/1iyNvfgKGQ_N0W-IvbxpxyQ3Im6CjiiJI?usp=sharing).
+ * *Other datasets* include datasets used to generate certain Figures, such as Figure 1 utilizing wholesale prices (i.e., wholesale_both with sample period and historic prices). Possible baseline (pre-crisis averages) prices for alternative vulnerability are also put together here for all countries.Raw data is also included here: hourly wholesale prices, daily gas prices (labeled newprices), while hourly raw energy generation and load data are too large and thus the link to these zip files is provided [here](https://drive.google.com/drive/folders/1iyNvfgKGQ_N0W-IvbxpxyQ3Im6CjiiJI?usp=sharing).
 
 
 ## Code
@@ -18,18 +18,20 @@
 
  * Fig1.do: Generates Figure 1 (4 Panels) using the datasets in *Combined* and *Other* datasets.
 
- * HourlyEstimates.do: Generates relative vulnerability metrics and creates dataset with all countries (see *combined* datasets). The *main* econometric specification estimation program. Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figure 2 Maps, Vulnerabilities for Figure 3, Panel B of Figure 4, Extended Data Map Figures (EDF 2 & 4) and SI Map Figures (S1-S6) [^2].
+ * HourlyEstimates.do: Generates vulnerability metric and creates dataset with all countries (see *combined* datasets). The *main* econometric specification estimation program. Simply changing the initial regression specficiation can yield different vulnerability estimates. It uses the *country* datasets. Used to generate Figure 2 Maps, Vulnerabilities for Figure 3, Panel B of Figure 4, Extended Data Map Figures (EDF 2 & 4) and SI Map Figures (S1-S6) [^2].
  
-  * AbsVul.do: Used to calculate absolute vulnerability from the relative vulnerabilities. Uses *Combined* datasets. 
+  * AbsVul.do: Used to calculate alternative vulnerability from the relative vulnerabilities. Uses *Combined* datasets. 
   
   * Fig3.do*: Generates Figure 3 scatter plots and the price cap table. Uses *combined* datasets.
   
- * Fig4.do: Generates Panel C,D,E of Figure 4. Also estimates average coefficients (included in generated excel sheet) used for Panel A. Uses *country* datasets.
+ * Fig4.do: Generates Panel C of Figure 4. Also estimates average coefficients (included in generated excel sheet) used for Panel A. Uses *country* datasets and *combined*  datasets.
  
  * Fig5.do: Generates Figure 5 of country case studies and price cap responsiveness (F). Uses *country* datasets. Legend is edited manually for visual purposes.
  
  **Extended Data and SI Figures**
- 
+
+ *EDF2&3.do: Generates EDF 2 and 3 Tables showing substition patterns and complementarity. Also generates bycountry.xls which shows these results for all countries. Uses *combined* datasets.
+
  * fig3_load.do: Generates Figure S11 (load as a denominator for shares calculation), similar to Figure 3 scatter plots. Uses *combined* datasets.
  
   * Fig3_noOct.do: Generates Figure S12 (excluding month of October for shares and vulnerability), similar to Figure 3 scatter plots. Uses *combined* datasets.
@@ -38,7 +40,9 @@
  
  * SITables.do: Generates data for the tables shown in Extended Data (Tables EDF3, EDF4, EDF5, EDF6) and SI section (Tables S1, S2, S3). Uses *country* datasets. These are heavily edited later to format appropriately and make final tables.
  
- * Multivariate_EDF4.do: Generates the multivariate regression table of the two vulnerability metrics against each energy share, as shown in EDF Figure 8.
+ * Multivariate_EDF4.do: Generates the multivariate regression table of the vulnerability metric against each energy share, as shown in EDF Figure 5.
+
+ * SINeighbors.do: Generates country specific robustness checks including neighbor countries' load and IRE generation.
  
  **Cleaning Code**
  
