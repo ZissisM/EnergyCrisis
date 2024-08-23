@@ -5,7 +5,7 @@
 
 ## Datasets 
 
- * *Contry datasets* include the data collected and used for each country, analyzed individually, for our sample period (April 1 2021-October 31 2021). These include the hourly wholesale electricity price, hourly load, and hourly energy generation by source, as described in Supplementary Discussion 4. Included are the individual TSOs of Germany and Norway, in addition to a more basic aggregated dataset for these countries. Datasets ending in "f" include the predicted wholesale prices for each natural gas price for each country, used in our price cap discussion. Datasets comprised of all countries with decarbonized shares over the sample period are included (RE_spag, deca).  Datasets are named according to their two letter official country abbreviation, and the ending of '_new'.  
+ * *Contry datasets* include the data collected and used for each country, analyzed individually, for our sample period (April 1 2021-October 31 2021). These include the hourly wholesale electricity price, hourly load, and hourly energy generation by source, as described in Supplementary Discussion 4. Included are the individual TSOs of Germany and Norway, in addition to a more basic aggregated dataset for these countries. Datasets ending in "f" include the predicted wholesale prices for each natural gas price for each country, used in our price cap discussion (while "f2" refers to the more extended period of an entire year using the '_year' datasets. Datasets comprised of all countries with decarbonized shares over the sample period are included (RE_spag, deca).  Datasets are named according to their two letter official country abbreviation, and the ending of '_new' (or  '_year' for the supplemental extended period).  
 
  * *Combined datasets* include streamlined data of all countries aggregated. Namely, average generation shares and vulnerability estimates (relative vulnerability labeled Intensity) are shown in allcountries_ datasets. Vulnerability estimates (e.g., used for Figure 2,3 and similar SI Figures) are reflected in HourlyEst_ datasets, and each specification condition (such as excluding a certain month or predicting future vulnerability).  Allcountries_ datasets include the HourlyEst_ estimates in addition to corresponding generation shares.
  
@@ -43,6 +43,9 @@
  * Multivariate_EDF4.do: Generates the multivariate regression table of the vulnerability metric against each energy share, as shown in EDF Figure 5.
 
  * SINeighbors.do: Generates country specific robustness checks including neighbor countries' load and IRE generation.
+
+ * Yearlong_SI.do: All the code needed to clean, format, analyze, and produce the SI figures replicating Figure 3 using supplemental data involving an entire year (November 2020-November 2021).
+
  
  **Cleaning Code**
  
