@@ -165,6 +165,7 @@ foreach x in "GR"{
 
 
 **Panel C** (Some manual edits to get to final figure)
+*added country names manually
 *
 use 3dfig
 

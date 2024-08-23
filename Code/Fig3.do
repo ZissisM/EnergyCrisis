@@ -186,7 +186,7 @@ replace m1=9 if Country=="DK"
 replace m1=6 if Country=="BE"
 replace m1=3 if Country=="RS"
 replace m1=4 if Country=="RO"
-replace m1=2 if Country=="CH"
+replace m1=1 if Country=="CH"
 replace m1=3 if Country=="AT"
 replace m1=12 if Country=="SI"
 replace m1=4 if Country=="FI"
@@ -196,11 +196,14 @@ replace m1=9 if Country=="GR"
 replace m1=12 if Country=="BG"
 replace m1=3 if Country=="HU"
 replace m1=4 if Country=="PT"
+replace m1=5 if Country=="NO"
 
 
 
+*Change to D?
 
-twoway scatter Intensity Gas if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.27) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("C)",position(11) size(*1.4)) xtitle("Natural gas share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(rg,replace) ||function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
+
+twoway scatter Intensity Gas if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.27) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("D)",position(11) size(*1.4)) xtitle("Natural gas share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(rg,replace) ||function y=_b[Gas]*x+_b[_cons],range(Gas) || lfit Intensity Gas if exclude==0, lcolor(ebblue*0.5)
 
 
 
@@ -398,3 +401,110 @@ robreg mm Intensity abs_sub if exclude==0
 matrix b=e(b)
 **both OLS and mm lines included, in addition to dots for each Country
 twoway scatter Intensity abs_sub if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*1.2) color(navy) graphregion(lstyle(none)) title("",position(11) size(*1)) xtitle("Abs(Substitution effect)",size(*1.2)) ylabel(,labsize(*1) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.2)) name(ai,replace) ||function y=_b[abs_sub]*x+_b[_cons],range(abs_sub) || lfit Intensity abs_sub if exclude==0, lcolor(ebblue*0.5)
+
+
+
+
+
+
+
+***New panel for Hydro Dispatch
+cap gen m7=1
+robreg mm Intensity HydroDispatch if exclude==0
+matrix b=e(b)
+**both OLS and mm lines included, in addition to dots for each Country
+replace m7=3 if Country=="NL"
+replace m7=3 if Country=="LT"
+replace m7=3 if Country=="EE"
+replace m7=3 if Country=="CZ"
+replace m7=12 if Country=="PL"
+replace m7=6 if Country=="SI"
+replace m7=3 if Country=="FR"
+replace m7=1 if Country=="BE"
+replace m7=3 if Country=="RS"
+replace m7=3 if Country=="PT"
+replace m7=9 if Country=="NO"
+replace m7=2 if Country=="HU"
+replace m7=2 if Country=="DE"
+
+twoway scatter Intensity HydroDispatch if exclude==0, mlabel(labels) mlabvposition(m7) mlabsize(*1.27) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("F)",position(11) size(*1.4)) xtitle("Hydro (dispatch) share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(rhd,replace) ||function y=_b[HydroDispatch]*x+_b[_cons],range(HydroDispatch) || lfit Intensity HydroDispatch if exclude==0, lcolor(ebblue*0.5)
+
+
+
+
+
+
+
+
+
+*** Seperate IRE
+
+*Solar
+
+*orientation of labels on plots
+replace m1=1 if Country=="DK"
+replace m1=9 if Country=="AT"
+replace m1=4 if Country=="RS"
+replace m1=3 if Country=="BE"
+replace m1=6 if Country=="FR"
+replace m1=4 if Country=="CH"
+replace m1=11 if Country=="BG"
+replace m1=3 if Country=="SK"
+replace m1=2 if Country=="CZ"
+replace m1=2 if Country=="SI"
+replace m1=1 if Country=="HR"
+replace m1=4 if Country=="LT"
+replace m1=3 if Country=="FI"
+replace m1=5 if Country=="EE"
+replace m1=12 if Country=="NL"
+replace m1=2 if Country=="RS"
+replace m1=3 if Country=="DE"
+replace m1=2 if Country=="RO"
+replace m1=9 if Country=="HU"
+replace m1=3 if Country=="PL"
+replace m1=3 if Country=="NO"
+
+
+*mm for robust regression to discount outliers
+robreg mm Intensity Solar if exclude==0
+matrix b=e(b)
+**both OLS and mm lines included, in addition to dots for each Country
+twoway scatter Intensity Solar if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("B)",position(11) size(*1.4)) xtitle("Solar share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(sol,replace) ||function y=_b[Solar]*x+_b[_cons],range(Solar) || lfit Intensity Solar if exclude==0, lcolor(ebblue*0.5)
+
+
+*Wind
+
+*orientation of labels on plots
+replace m1=10 if Country=="DK"
+replace m1=9 if Country=="AT"
+replace m1=4 if Country=="RS"
+replace m1=3 if Country=="BE"
+replace m1=6 if Country=="FR"
+replace m1=4 if Country=="CH"
+replace m1=2 if Country=="BG"
+replace m1=3 if Country=="SK"
+replace m1=12 if Country=="CZ"
+replace m1=1 if Country=="SI"
+replace m1=1 if Country=="HR"
+replace m1=4 if Country=="LT"
+replace m1=3 if Country=="FI"
+replace m1=3 if Country=="EE"
+replace m1=12 if Country=="NL"
+replace m1=3 if Country=="RS"
+replace m1=3 if Country=="DE"
+replace m1=4 if Country=="RO"
+replace m1=9 if Country=="HU"
+replace m1=3 if Country=="PL"
+replace m1=12 if Country=="NO"
+replace m1=12 if Country=="SI"
+
+
+
+*mm for robust regression to discount outliers
+robreg mm Intensity Wind if exclude==0
+matrix b=e(b)
+**both OLS and mm lines included, in addition to dots for each Country
+twoway scatter Intensity Wind if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("C)",position(11) size(*1.4)) xtitle("Wind share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(win,replace) ||function y=_b[Wind]*x+_b[_cons],range(Wind) || lfit Intensity Wind if exclude==0, lcolor(ebblue*0.5)
+
+graph combine rd sol win rg ag, rows(2) col(4) altshrink
+

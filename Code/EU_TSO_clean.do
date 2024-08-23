@@ -190,7 +190,7 @@ drop period
 gen period = 1 if month<=4
 replace period = 2 if month>= 4 & month<=9 
 replace period = 3 if month > 9
-hist Gas_share if month>=4, by(hour) percent title("Portugal at hour:")
+hist Gas_share if month>=4, by(hour) percent title("Country at hour:")
 
 keep if yr==2021 & month >= 4
 save _2021
