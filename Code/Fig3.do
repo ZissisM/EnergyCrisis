@@ -508,3 +508,47 @@ twoway scatter Intensity Wind if exclude==0, mlabel(labels) mlabvposition(m1) ml
 
 graph combine rd sol win rg ag, rows(2) col(4) altshrink
 
+
+
+
+*Hydro-run-of-river
+
+replace exclude=1 if Hydro_R==0
+replace exclude=0
+
+replace exclude=1 if Country=="AT"
+*orientation of labels on plots
+replace m1=3 if Country=="DK"
+replace m1=9 if Country=="AT"
+replace m1=4 if Country=="RS"
+replace m1=1 if Country=="BE"
+replace m1=6 if Country=="FR"
+replace m1=4 if Country=="CH"
+replace m1=2 if Country=="BG"
+replace m1=3 if Country=="SK"
+replace m1=12 if Country=="CZ"
+replace m1=1 if Country=="SI"
+replace m1=1 if Country=="HR"
+replace m1=3 if Country=="LT"
+replace m1=3 if Country=="FI"
+replace m1=5 if Country=="EE"
+replace m1=12 if Country=="NL"
+replace m1=3 if Country=="RS"
+replace m1=3 if Country=="DE"
+replace m1=4 if Country=="RO"
+replace m1=9 if Country=="HU"
+replace m1=3 if Country=="PL"
+replace m1=12 if Country=="NO"
+replace m1=12 if Country=="SI"
+
+
+
+*mm for robust regression to discount outliers
+robreg mm Intensity Hydro_R if exclude==0
+matrix b=e(b)
+**both OLS and mm lines included, in addition to dots for each Country
+twoway scatter Intensity Hydro_R if exclude==0, mlabel(labels) mlabvposition(m1) mlabsize(*1.3) msymbol(d) mcolor(maroon%75) msize(*2.02) color(navy) graphregion(lstyle(none)) title("",position(11) size(*1.4)) xtitle("Hydro-run-of-river share",size(*1.47)) ylabel(,labsize(*1.6) grid gmax gmin glwidth(0.5)) legend(off) xlabel(,labsize(*1.4)) ytitle(Vulnerability (EUR/MWh),size(*1.47)) name(win,replace) ||function y=_b[Hydro_R]*x+_b[_cons],range(Hydro_R) || lfit Intensity Hydro_R if exclude==0, lcolor(ebblue*0.5)
+
+
+
+

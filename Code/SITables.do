@@ -327,3 +327,8 @@ outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(
 
 *Output table but it is edited manually
 
+
+
+***SI Graph for Hydro and Natural Gas Correlations of Figure 5
+use HydroCorrelation
+graph hbar CorrelationHydroandNG, over(Country) ytitle("Hourly Correlation of Dispatchable Hydro and Natural Gas") bar(1, color(maroon*0.8))
