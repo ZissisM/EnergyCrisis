@@ -76,7 +76,12 @@ gen hour_group = 1 if hour < 10
 replace hour_group = 2 if hour>9 & hour<17
 replace hour_group = 3 if hour>16
 
+*!!!!!
 **Calculate vulnerability metrics
+*_1,_2,_3 refers to different hour-groups of the day, to be done only for exploratory analysis. 
+*The main results are the Intensity (or below elec_ps) without _1,_2,_3.
+
+
 foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK"  {
 	cap drop Hours_PT_`y' `y'_t 
 	cap drop Intensity_PT_`y' Hours_PT_`y'_1 Hours_PT_`y'_2 Hours_PT_`y'_3 Intensity_PT_`y'_1 Intensity_PT_`y'_2 Intensity_PT_`y'_3 elec_`y' elec_`y'_1 elec_`y'_2 elec_`y'_3
@@ -103,6 +108,8 @@ foreach y in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "GR" "HR" "
 
 	//April to October gas price difference = 68.3
  	cap gen elec_`y'= (68.3 * Intensity_PT_`y')/24
+	
+	
  	gen elec_`y'_1= (68.3 * Intensity_PT_`y'_1)/ 10
  	gen elec_`y'_2= (68.3 * Intensity_PT_`y'_2)/7 
  	gen elec_`y'_3= (68.3 * Intensity_PT_`y'_3)/7 

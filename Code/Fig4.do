@@ -8,12 +8,14 @@
 
 set scheme white_tableau
 
-**Regressions for each country by hour group (and entire day "average") exported to excel, then improted again into new file (Fig5_Level)
 
 *in Country datasets
  cd ~/Downloads/Nature_Energy_Crisis/Datasets/Country datasets
 
 
+ 
+ **These hour groups are only exploratory!**
+ *Average is for PANEL A USED*
 putexcel set Fig4_Level, replace
 
 putexcel A1 = "Country"
@@ -31,6 +33,8 @@ putexcel L1= " avg_h"
 putexcel M1= " avg_l"
 
 local myrow = 2
+
+**Regressions for each country by hour group (and entire day "average") exported to excel, then improted again into new file
 
 
 foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "ROs" "RS" "SI" "SK"{
@@ -164,9 +168,12 @@ foreach x in "GR"{
 // graph twoway  (rcap  pmm_l pmm_h n2 if exlcude==0 &pmm_sig==1, lwidth(*1.7) msize(*1.5) horizontal lcolor(navy*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot pmm_coef n2 if exlcude==0 & pmm_sig==1, horizontal xtitle("Pass-Through coefficient", size(*1.4)) xlabel(,labsize(*1.3)) mcolor(navy%85) msymbol(d)  msize(*2.05) ysc(r(0 1)) ytitle("") title(" E) Evening (17:00 - 23:00)",position(11) size(*0.95)) barw(1.3) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium) angle(horizontal))) || (dot pmm_coef n2 if exlcude==0 & pmm_sig==0, horizontal ysc(r(0 1)) msymbol(d)  mcolor(ltblue*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium) grid gmax gmin glwidth(0.2) angle(horizontal)) name(c3,replace)) || (rcap  pmm_l pmm_h n2 if exlcude==0 &pmm_sig==0, lwidth(*1.7) msize(*1.5) horizontal lcolor(ltblue*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot pmm_coef n2 if exlcude==0 & pmm_sig==2, horizontal ysc(r(0 1)) msymbol(d)  mcolor(maroon*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal))) || (rcap  pmm_l pmm_h n2 if exlcude==0 &pmm_sig==2, lwidth(*1.7) msize(*1.5) horizontal lcolor(maroon*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot pmm_coef n2 if exlcude==0 & pmm_sig==3, horizontal ysc(r(0 1)) msymbol(d)  mcolor(emerald*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal))) || (rcap  pmm_l pmm_h n2 if exlcude==0 &pmm_sig==3, lwidth(*1.7) msize(*1.5) horizontal lcolor(emerald*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9))) || (dot pmm_coef n2 if exlcude==0 & pmm_sig==4, horizontal ysc(r(0 1)) msymbol(d)  mcolor(purple*0.8) barw(1.3) msize(*2.05) legend(off) ylabel(0(0.1)1) ylabel(1(1)24,valuelabel labsize(medium)  grid gmax gmin glwidth(0.2) angle(horizontal))) || (rcap  pmm_l pmm_h n2 if exlcude==0 &pmm_sig==4, lwidth(*1.7) msize(*1.5) horizontal lcolor(purple*0.9) xline(1, lwidth(*1.9)) xline(0, lwidth(*1.9)))
 
 
+**Panel C!*
 **Panel C** (Some manual edits to get to final figure)
 *added country names manually
 *
+
+
 use 3dfig
 
 heatplot Rel_Vul Intensity Frequency, scatter bins(24) color(,reverse opacity(85)) stat(asis)   p(lalign(center) lwidth(thin)) size(2+gas_share*2)  recenter   keylabels(1 15) ylabel(, nogrid) xlabel(,nogrid)  title("C)",size(*1.3) position(11))
