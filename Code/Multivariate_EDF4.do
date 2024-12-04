@@ -22,7 +22,7 @@ label var absV "Absolute Vulnerability"
 
 
 *2nd column for relative vulnerability in table 
-label var Intensity "Relative Vulnerability"
+label var Intensity "Vulnerability"
 reg Intensity Solar Wind Hydro_R Nuc Coal Gas HydroDispatch,vce(robust)
 test Solar Wind Hydro_R Nuc Coal Gas HydroDispatch 
 outreg2 using TableSImultivariateShares.doc, replace se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2 ctitle("Vulnerability")

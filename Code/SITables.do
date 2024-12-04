@@ -321,7 +321,7 @@ outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(
 **Main specification
 use allcountries_genshares,clear
 replace Solar = 0.038 in 7 //Denmark educated guess (based on ourworldindata.org Electricity Mix Profile) for solar so it does not omit entire country for missing this value in the regression
-reg Intensity Solar Wind Nuc Coal Gas HydroDispatch,vce(robust)
+reg Intensity Solar Wind Nuc Hydro_R Coal Gas HydroDispatch,vce(robust)
 test Solar Wind Nuc Coal Gas HydroDispatch 
 outreg2 using SI3Multivariate.doc, append se label bdec(2) nocons adds(F-test,r(F),Prob>F,`r(p)') adjr2
 

@@ -1,4 +1,5 @@
-***Figure 4 generation Panels C,D,E
+******Time-of-Day estimates are now only in EDF Figure 9********
+*Figure 4 Panel C at the bottom!
 
 *Maps A and B were constructed using outside software (https://app.datawrapper.de) but with esitmates from here:
 *Map A used the average column (K1 one excel) and the corresponding confidence intervals as the inputs for the average pass-through coefficient
@@ -16,7 +17,7 @@ set scheme white_tableau
  
  **These hour groups are only exploratory!**
  *Average is for PANEL A USED*
-putexcel set Fig4_Level, replace
+putexcel set EDF9, replace
 
 putexcel A1 = "Country"
 putexcel B1= " am_coef" //coefficient
@@ -31,13 +32,18 @@ putexcel J1= " pmm_l"
 putexcel K1= " Average"
 putexcel L1= " avg_h"
 putexcel M1= " avg_l"
+putexcel N1 = " am_p" // P-value for Overnight
+putexcel O1 = " pm_p" // P-value for Mid-day
+putexcel P1 = " pmm_p" // P-value for Evening
+putexcel Q1 = " avg_p" // P-value for Average
+
 
 local myrow = 2
 
 **Regressions for each country by hour group (and entire day "average") exported to excel, then improted again into new file
 
 
-foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "ROs" "RS" "SI" "SK"{
+foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "HR" "HU" "IT" "LT" "NL" "NO" "PL" "PT" "RO" "RS" "SI" "SK"{
 
 	use `x'_new, clear    
 
@@ -47,6 +53,7 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "HR" "HU" "
 	mat t1= r(table)
 	putexcel C`myrow' = t1[6,1] //upper 95% confidence interval
 	putexcel D`myrow' = t1[5,1] //lower 95% confidence interval
+	putexcel N`myrow' = t1[4,1] // P-value
 
 	reg wholesale_test gas_p c.load##c.load RE_gen i.month#i.hour i.hour#i.dow if hour_bin==2, cluster(dt)	//Mid-day
 	putexcel E`myrow' = matrix(e(b)[1,1])
@@ -54,16 +61,23 @@ foreach x in "AT" "BE" "BG" "CH" "CZ" "DE"  "DK" "EE" "ES" "FI" "FR" "HR" "HU" "
 
 	putexcel F`myrow' = t2[6,1]
 	putexcel G`myrow' = t2[5,1]
+	putexcel O`myrow' = t2[4,1] // P-value
+	
+	
 	reg wholesale_test gas_p c.load##c.load RE_gen i.month#i.hour i.hour#i.dow if hour_bin==3, cluster(dt)	//Evening
 	putexcel H`myrow' = matrix(e(b)[1,1])
 	mat t3= r(table)
 	putexcel I`myrow' = t3[6,1]
 	putexcel J`myrow' = t3[5,1]
+	putexcel P`myrow' = t3[4,1] // P-value
+	
+	
 	reg wholesale_test gas_p c.load##c.load RE_gen i.month#i.hour i.hour#i.dow, cluster(dt) //Entire day "Average"
 	putexcel K`myrow' = matrix(e(b)[1,1])
 	mat t4=r(table)
 	putexcel L`myrow' = t4[6,1]
 	putexcel M`myrow' = t4[5,1]
+	putexcel Q`myrow' = t4[4,1] // P-value
 
 	local myrow = `myrow' + 1
 
